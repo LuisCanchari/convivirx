@@ -1,0 +1,148 @@
+@charset "UTF-8";
+* {
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Verdana;
+    color: #0c0505
+}
+
+#contenedor {
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+    border: solid 1px #BDBDBD;
+    /***flex***/
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+#header {
+    width: 100%;
+    background-color: #fff;
+    /***flex****/
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+#logo {
+    width: 600px;
+    min-width: 500px;
+}
+
+#logo img {
+    width: 100%;
+    max-width: 600px;
+    min-width: 400px;
+    height: auto;
+}
+
+#foto img {
+    width: 100%;
+    max-width: 1200px;
+    height: auto
+}
+
+#logo {
+    width: 50%;
+    height: auto;
+    /***flex item***/
+}
+
+#cardlogin {
+    width: 50%;
+    height: 150px;
+    background-color: #fff;
+    /***flex****/
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+#controles {
+    width: 100%;
+    height: 44px;
+    margin: 10px;
+    background-color: white;
+    /***flex***/
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: space-between;
+}
+
+.control {
+    flex-grow: 1;
+    /**flex**/
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-right: 10px;
+}
+
+.control select {
+    height: 100%;
+    width: 210px;
+    border: green 1px solid;
+}
+
+.control a img {
+    align-items: flex-end;
+}
+
+#datos {
+    width: 100%;
+    height: auto;
+    background-color: whitesmoke;
+    border: #0c0505 1px;
+    border-style: solid;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    /***flex***/
+}
+
+#datos p {
+    margin: 0px;
+    width: 100%;
+    min-width: ;
+}
+
+#main {
+    width: 100%;
+    height: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: green 1px solid;
+    /***flex***/
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: left;
+    align-content: center;
+}
+
+#main a {
+    margin: 25px;
+}
+
+#footer {
+    width: 100%;
+    height: auto;
+    margin: 10px;
+   
+    /***flex***/
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-items: left;
+}
+
+#footer a {
+    margin: 10px;
+}
