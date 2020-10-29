@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.fasterxml.jackson.core.sym.Name;
+
 
 import edu.cientifica.convivirx.model.Usuario;
 import edu.cientifica.convivirx.services.UsuarioService;
@@ -36,7 +36,7 @@ public class UsuarioController {
 	
 	/*@RequestMapping(value = "/validar", method = RequestMethod.POST)*/
 	@PostMapping("/validar")
-	public String validarUsuario(Model model, 
+	public String validarUsuario(Model model,  
 			@RequestParam(name = "username") String username,
 			@RequestParam(name = "password") String password) 
 	{
@@ -44,9 +44,17 @@ public class UsuarioController {
 		
 		if (usuarioService.validarUsuario(usuario)) {
 			return "principal";
+			
 		};
 		
+		
 		return "login";
+	}
+	
+	@RequestMapping (value = {"/demo"}, method = RequestMethod.GET)
+	public String demoForm() {
+		
+		return "demoform";
 	}
 
 }

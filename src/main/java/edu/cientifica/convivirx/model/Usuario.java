@@ -1,10 +1,11 @@
 package edu.cientifica.convivirx.model;
 
-public class Usuario {
+public class Usuario extends Persona{
 	private int id;
 	private String username;
 	private String password;
 	private String mail;
+	private int tipoUsuario; 
 	
 		
 	public Usuario() {

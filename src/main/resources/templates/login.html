@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:th="https://www.thymeleaf.org" 
+xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <head>
     <meta charset="utf-8">
@@ -89,7 +91,7 @@
     <div class="login-form" id="login-form">
         <form th:action="@{/validar}" method="post" action="/validar">
 
-            <img src="/img/logobasic.png" alt="logotitulo" style="width: 300px; height: auto; margin: 10px;">
+            <img src="/img/logobasic.png" th:src="@{/img/logobasic.png}" alt="logotitulo" style="width: 300px; height: auto; margin: 10px;">
             <div class="alert alert-danger" role="alert" th:if="${loginError}">
                 <p class="text-center">Usuario o contraseña incorrecta</p>
             </div>

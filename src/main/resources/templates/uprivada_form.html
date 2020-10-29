@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+	th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css}"
+	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<link rel="stylesheet" href="/css/convivir.css" th:href="@{/css/convivir.css}">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Convivir</title>
+</head>
+
+<body>
+	<div id="contenedor">
+		<div id="header">
+			<div id="logo">
+				<img src="/img/logotitulo.png" th:src="@{/img/logotitulo.png}" alt="logotitulo">
+
+			</div>
+			<div id="cardlogin">
+				<div id="controles">
+					<div class="control">
+						<select name="uinmobiliaria" id="uinmobiliaria">
+							<option value="1">La Florida</option>
+							<option value="2">Los Titanes</option>
+							<option value="3">Camino Real</option>
+							<option value="4">Campanilla</option>
+						</select>
+					</div>
+					<div class="control">
+						<select name="uprivada" id="uprivada">
+							<option value="1">Dpto 101 A</option>
+							<option value="2">Dpto 102 A</option>
+						</select>
+					</div>
+					<div class="control">
+						<a href="/index" th:href="@{/index}">
+							<img src="/img/butt_cerrar_sesion.png" th:src="@{/img/butt_cerrar_sesion.png}">
+
+						</a>
+					</div>
+
+				</div>
+				<div id="datos">
+					<p>Usuario: Juan Zavaleta Garcia</p>
+					<p>Propietario: Pedro Teran Gutierrez</p>
+					<p>Deuda: S/ 123.00</p>
+				</div>
+			</div>
+
+		</div>
+		<div id=foto>
+			<img src="/img/fotoheader.png" th:src="@{/img/fotoheader.png}" alt="fotoheader">
+
+		</div>
+		<div class="principal">
+
+			<form action="" th:action="@{/uprivada/registrar}" method="post" th:object="${Uprivada}">
+				<div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
+					<p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+				</div>
+				<div class="container">
+
+					<div class="form-group row">
+						<div class="col-3">
+							<label for="idUprivada">Id: </label>
+						</div>
+						<div class="col-3">
+							<input type="number" id="idUprivada" name="idUprivada" th:field="*{id}" class="form-control">
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<div class="col-3">
+							<label for="tipoUnidad">Tipo Unidad:</label>
+						</div>
+						<div class="col-7">
+							<select class="form-control" id="tipoUnidad" name="tipoUnidad" th:field="*{tipoUnidad}">
+								<option value="1">Vivienda</option>
+								<option value="2">Departamento</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<div class="col-3">
+							<label for="numeracion">Numeración: </label>
+						</div>
+						<div class="col-7">
+							<input type="text" id="numeracion" name="numeracion" th:field="*{numeracion}" class="form-control">
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<div class="col-3">
+							<label for="zona">Zona: </label>
+						</div>
+						<div class="col-6">
+							<input type="text" id="zona" name="zona" th:field="*{zona}" class="form-control">
+						</div>
+						<!-- 						<div  th:if="${#fields.hasErrors('zona')}" th:errors="*{zona}" class="col-3 error">Name Error</div> -->
+						<span th:if="${#fields.hasErrors('zona')}" th:errors="*{zona}">Full name error</span>
+
+
+					</div>
+
+					<div class="form-group row">
+						<div class="col-3">
+							<label for="uinmobiliaria">U. Inmobiliaria:</label>
+						</div>
+						<div class="col-7">
+							<select id="uinmobiliaria" name="uinmobiliaria" class="form-control" th:field="*{unidadInmobiliaria.id}">
+								<option th:value="0" th:text="---Seleccionar---"></option>
+								<option th:each="unidadInmobiliaria: ${listaUnidadInmobiliaria}" th:value="${unidadInmobiliaria.id}"
+									th:text="${unidadInmobiliaria.nombreCorto}"></option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col-2">
+							<input type="submit" class="btn btn-success btn-block" value="Grabar" id="btngrabar">
+						</div>
+					</div>
+				</div>
+				
+
+			</form>
+		</div>
+		<div id="footer">
+			<a class="card_foot" href="#">
+				<img src="/img/card_quienessomos.png" th:src="@{/img/card_quienessomos.png}" alt="quienes somos">
+			</a>
+			<a class="card_foot" href="#">
+				<img src="/img/card_nuestrosservicios.png" th:src="@{/img/card_nuestrosservicios.png}" alt="nuestros servicios">
+			</a>
+
+			<a class="card_foot" href="#">
+				<img src="/img/card_solicitademo.png" th:src="@{/img/card_solicitademo.png}" alt="solicita una demo">
+			</a>
+
+		</div>
+
+	</div>
+</body>
+
+</html>

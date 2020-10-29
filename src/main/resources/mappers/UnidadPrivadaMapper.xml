@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.cientifica.convivirx.mappers.UnidadPrivadaMapper">
+
+	<resultMap id="unidadPrivadaResultMap" type="edu.cientifica.convivirx.model.UnidadPrivada">
+		<id column="id_uprivada" property="id" />
+		<result column="tipo_unidad" property="tipoUnidad" />
+		<result column="numeracion" property="numeracion" />
+		<result column="zona" property="zona" />
+		<association column="id_uinmobiliaria" property="unidadInmobiliaria"
+			javaType="edu.cientifica.convivirx.model.UnidadInmobiliaria" 
+			resultMap="edu.cientifica.convivirx.mappers.UnidadInmobiliariaMapper.unidadInmobiliariaResultMap" />
+	</resultMap>
+	<select id="listaunidadesinmobiliarias">
+	 SELECT * FROM unidadinmobiliaria
+	</select>
+</mapper>

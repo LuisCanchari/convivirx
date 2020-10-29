@@ -119,12 +119,14 @@ body {
     margin-top: 10px;
     margin-bottom: 10px;
     border: green 1px solid;
+    min-height: 400px;
     /***flex***/
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: left;
     align-content: center;
+    
 }
 
 #main a {
@@ -146,3 +148,23 @@ body {
 #footer a {
     margin: 10px;
 }
+.principal {
+		width: 100%;
+    height: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: green 1px solid;
+    min-height: 400px;
+    /***flex***/
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-content: flex-start;
+}
+.principal form{
+		width:100%;
+		margin-top:20px
+		
+}
+.principal::-webkit-scrollbar
