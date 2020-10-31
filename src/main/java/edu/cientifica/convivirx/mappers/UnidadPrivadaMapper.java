@@ -17,9 +17,11 @@ public interface UnidadPrivadaMapper {
 	@ResultMap("edu.cientifica.convivirx.mappers.UnidadPrivadaMapper.unidadPrivadaResultMap")
 	public List<UnidadPrivada> findAllUnidadPrivada();
 	
+	
 	@Select("SELECT * FROM unidadprivada WHERE id_uprivada = #{id} order by id asc" )
 	@ResultMap("edu.cientifica.convivirx.mappers.UnidadPrivadaMapper.unidadPrivadaResultMap")
 	public List<UnidadPrivada> findUnidadPrivadaById(int id);
+	
 	
 	
 	@Insert("INSERT INTO unidadprivada (id_uprivada, tipo_unidad, numeracion, zona, id_uinmobiliaria) "
