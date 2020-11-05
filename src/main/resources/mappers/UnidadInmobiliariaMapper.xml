@@ -12,4 +12,6 @@
     <result column="longitud_map" property="longitud" />
   </resultMap>
   
+  
+  
 </mapper>

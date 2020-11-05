@@ -63,7 +63,7 @@
     </div>
     <div class="principal">
 
-      <form action="" th:action="@{/uprivada/registrar}" method="post"
+      <form action="" th:action="@{/uprivada/actualizar}" method="post"
         th:object="${Uprivada}">
 
         <div class="container">
@@ -74,7 +74,7 @@
             </div>
             <div class="col-3">
               <input type="number" id="idUprivada" name="idUprivada"
-                th:field="*{id}" class="form-control" readonly="readonly">
+                th:field="*{id}" class="form-control">
             </div>
           </div>
 
@@ -85,8 +85,8 @@
             <div class="col-6">
               <select class="form-control" id="tipoUnidad"
                 name="tipoUnidad" th:field="*{tipoUnidad}">
-                <option value="1">Vivienda</option>
-                <option value="2">Departamento</option>
+                <option value="1" th:selected="*{tipoUnidad}==1">Vivienda</option>
+                <option value="2" th:selected="*{tipoUnidad}==2">Departamento</option>
               </select>
             </div>
           </div>
@@ -124,16 +124,17 @@
                 class="form-control" th:field="*{unidadInmobiliaria.id}">
                 <option th:value="0" th:text="---Seleccionar---"></option>
                 <option
-                  th:each="unidadInmobiliaria: ${listaUnidadInmobiliaria}"
-                  th:value="${unidadInmobiliaria.id}"
-                  th:text="${unidadInmobiliaria.nombreCorto}"></option>
+                  th:each="inmobiliaria: ${listaUnidadInmobiliaria}"
+                  th:value="${inmobiliaria.id}"
+                  th:text="${inmobiliaria.nombreCorto}"
+                  th:selected="(${inmobiliaria.id}==*{unidadInmobiliaria.id})"></option>
               </select>
             </div>
           </div>
           <div class="form-group row">
             <div class="col-2">
               <input type="submit" class="btn btn-success btn-block"
-                value="Grabar" id="btngrabar">
+                value="Actualizar" id="btnactualizar">
             </div>
           </div>
         </div>

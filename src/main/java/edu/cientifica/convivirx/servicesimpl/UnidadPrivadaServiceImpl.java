@@ -22,17 +22,60 @@ public class UnidadPrivadaServiceImpl implements UnidadPrivadaService{
 	@Override
 	public int registrarUnidadPrivada(UnidadPrivada unidadPrivada) {
 		int result;
-		result=unidadPrivadaMapper.addUnidadPrivada(unidadPrivada);
-		LOG.info("Numero de registroa afectados : "+result);
+		result=unidadPrivadaMapper.insertUnidadPrivada(unidadPrivada);
+		LOG.info("Numero de registros afectados : "+result);
 		return result;
 	}
+	
 
 	@Override
 	public List<UnidadPrivada> listarUnidadPrivada(){
 		
 		LOG.info("Unidades: " +unidadPrivadaMapper.findAllUnidadPrivada());
 		return unidadPrivadaMapper.findAllUnidadPrivada();
+	}
+	
+	@Override
+	public int actualizarUnidadPrivada(UnidadPrivada unidadPrivada) {
+		int result;
+		result=unidadPrivadaMapper.updateUnidadPrivada(unidadPrivada);
+		LOG.info("Numero de registros afectados : "+result);
+		return result;
+	}
+
+
+	@Override
+	public int eliminarUnidadPrivada(int id) {
+		int result;
+		result = unidadPrivadaMapper.deleteUnidadPrivada(id);
+		LOG.info("Numero de registros afectados : "+result);
+		return result;
+	}
+
+
+	@Override
+	public UnidadPrivada unidadPrivadaById(int id) {
+		UnidadPrivada unidadPrivada;
+		unidadPrivada = unidadPrivadaMapper.findUnidadPrivadaById(id);
+		
+		return unidadPrivada;
+	}
+
+
+	@Override
+	public int generarCodigoUP() {
+		// TODO Auto-generated method stub
+		return unidadPrivadaMapper.generarCodigoUP();
+		
 		
 	}
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

@@ -16,11 +16,11 @@ public class UnidadPrivada {
 	private int tipoUnidad;
 
 	@NotNull
-	@Size(min = 2, max = 10)
+	@Size(min = 2, max = 10, message = "La numeracion debe ser de dos digitos")
 	private String numeracion;
 
 	
-	@Size(min=2, message = "Debe tener mas de dos caracteres")
+	@Size(min=2, message = "La zona debe tener mas de dos caracteres")
 	private String zona;
 
 	@NotNull

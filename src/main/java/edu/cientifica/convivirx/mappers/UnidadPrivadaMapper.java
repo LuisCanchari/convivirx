@@ -2,10 +2,13 @@ package edu.cientifica.convivirx.mappers;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.ResultMap;
+import org.apache.ibatis.annotations.ResultType;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import edu.cientifica.convivirx.model.UnidadPrivada;
 
@@ -18,14 +21,26 @@ public interface UnidadPrivadaMapper {
 	public List<UnidadPrivada> findAllUnidadPrivada();
 	
 	
-	@Select("SELECT * FROM unidadprivada WHERE id_uprivada = #{id} order by id asc" )
+	@Select("SELECT * FROM unidadprivada WHERE id_uprivada = #{id}" )
 	@ResultMap("edu.cientifica.convivirx.mappers.UnidadPrivadaMapper.unidadPrivadaResultMap")
-	public List<UnidadPrivada> findUnidadPrivadaById(int id);
+	public UnidadPrivada findUnidadPrivadaById(int id);
+	
 	
 	
 	
 	@Insert("INSERT INTO unidadprivada (id_uprivada, tipo_unidad, numeracion, zona, id_uinmobiliaria) "
 			+ "VALUES (#{id}, #{tipoUnidad}, #{numeracion}, #{zona}, #{unidadInmobiliaria.id})" )
-	public int addUnidadPrivada(UnidadPrivada unidadPrivada);
+	public int insertUnidadPrivada(UnidadPrivada unidadPrivada);
+	
+	@Update("UPDATE unidadprivada SET tipo_unidad= #{tipoUnidad}, numeracion=#{numeracion}, zona=#{zona}, "
+			+"id_uinmobiliaria=#{unidadInmobiliaria.id} WHERE id_uprivada= #{id}")
+	public int updateUnidadPrivada(UnidadPrivada unidadPrivada); 
+	
+	@Delete("DELETE FROM unidadprivada WHERE id_uprivada= #{id}")
+	public int deleteUnidadPrivada(int id);
+	
+	@Select("select max(id_uprivada) + 1 as codigo from unidadprivada")
+	@ResultType(Integer.class)
+	public int generarCodigoUP();
 	
 }
