@@ -21,7 +21,8 @@ public interface UnidadPrivadaMapper {
 	public List<UnidadPrivada> findAllUnidadPrivada();
 	
 	
-	@Select("SELECT * FROM unidadprivada WHERE id_uprivada = #{id}" )
+	@Select("SELECT * FROM unidadprivada up INNER JOIN unidadinmobiliaria ui ON up.id_uinmobiliaria=ui.id_uinmobiliaria "
+			+ "WHERE up.id_uprivada=#{id}")
 	@ResultMap("edu.cientifica.convivirx.mappers.UnidadPrivadaMapper.unidadPrivadaResultMap")
 	public UnidadPrivada findUnidadPrivadaById(int id);
 	
@@ -42,5 +43,7 @@ public interface UnidadPrivadaMapper {
 	@Select("select max(id_uprivada) + 1 as codigo from unidadprivada")
 	@ResultType(Integer.class)
 	public int generarCodigoUP();
+	
+	
 	
 }
