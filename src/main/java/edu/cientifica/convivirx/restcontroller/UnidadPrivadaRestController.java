@@ -32,6 +32,7 @@ public class UnidadPrivadaRestController {
 	@GetMapping(value = "/all")
 	public List<UnidadPrivada> getAll(){
 		List<UnidadPrivada> lista;
+		
 		lista = unidadPrivadaService.listarUnidadPrivada();
 		return lista;
 	}
@@ -45,11 +46,11 @@ public class UnidadPrivadaRestController {
 	}
 	
 	
-	@GetMapping(value = "/condominio/{inmobiliariaId}")
-	public UnidadPrivada getByUnidadInmobiliaria(@PathVariable(name = "inmobiliariaId") int id){
-		UnidadPrivada  unidadPrivada;
-		unidadPrivada= unidadPrivadaService.unidadPrivadaById(id);
-		return unidadPrivada ;
+	@GetMapping(value = "/condominio/{id}")
+	public List<UnidadPrivada> getUnidadPrivadaPorCondominio(@PathVariable(name = "id") int id){
+		
+		return unidadPrivadaService.unidadPrivadaByCondominio(id);
+		
 	}
 	
 	@PostMapping(value = "/save")

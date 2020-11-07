@@ -29,7 +29,7 @@ public class UnidadPrivadaServiceImpl implements UnidadPrivadaService {
 	@Override
 	public List<UnidadPrivada> listarUnidadPrivada() {
 
-		LOG.info("Unidades: " + unidadPrivadaMapper.findAllUnidadPrivada());
+		//LOG.info("Unidades: " + unidadPrivadaMapper.findAllUnidadPrivada());
 		return unidadPrivadaMapper.findAllUnidadPrivada();
 	}
 
@@ -84,5 +84,14 @@ public class UnidadPrivadaServiceImpl implements UnidadPrivadaService {
 
 		return false;
 	}
+
+	@Override
+	public List<UnidadPrivada> unidadPrivadaByCondominio(int condominioId) {
+		// TODO Auto-generated method stub
+		return unidadPrivadaMapper.findUnidadPrivadaByCondomio(condominioId);
+		
+	}
+	
+	
 
 }

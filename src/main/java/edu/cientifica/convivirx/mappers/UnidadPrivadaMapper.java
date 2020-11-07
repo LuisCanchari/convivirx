@@ -45,5 +45,11 @@ public interface UnidadPrivadaMapper {
 	public int generarCodigoUP();
 	
 	
+	@Select("SELECT * FROM unidadprivada up INNER JOIN unidadinmobiliaria ui ON up.id_uinmobiliaria=ui.id_uinmobiliaria "
+			+ "where up.id_uinmobiliaria = #{condominioId}")
+	@ResultMap("edu.cientifica.convivirx.mappers.UnidadPrivadaMapper.unidadPrivadaResultMap")
+	public List<UnidadPrivada> findUnidadPrivadaByCondomio(int condominioId);
+	
+	
 	
 }

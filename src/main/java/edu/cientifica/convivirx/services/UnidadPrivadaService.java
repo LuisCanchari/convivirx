@@ -22,5 +22,7 @@ public interface UnidadPrivadaService {
 	public UnidadPrivada save(UnidadPrivada unidadPrivada);
 	public boolean delete(int unidadPrivadaId);
 	
+	public List<UnidadPrivada> unidadPrivadaByCondominio(int condominioId);
+	
 	
 }
