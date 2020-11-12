@@ -89,7 +89,7 @@ xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <body>
     <div class="login-form" id="login-form">
-        <form th:action="@{/validar}" method="post" action="/validar">
+        <form th:action="@{/usuario/validar}" method="post" action="/validar">
 
             <img src="/img/logobasic.png" th:src="@{/img/logobasic.png}" alt="logotitulo" style="width: 300px; height: auto; margin: 10px;">
             <div class="alert alert-danger" role="alert" th:if="${loginError}">

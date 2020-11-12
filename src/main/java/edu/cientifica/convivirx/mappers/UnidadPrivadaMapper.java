@@ -40,7 +40,7 @@ public interface UnidadPrivadaMapper {
 	@Delete("DELETE FROM unidadprivada WHERE id_uprivada= #{id}")
 	public int deleteUnidadPrivada(int id);
 	
-	@Select("select max(id_uprivada) + 1 as codigo from unidadprivada")
+	@Select("SELECT IFNULL(max(id_uprivada), 0)+1 as id from unidadprivada")
 	@ResultType(Integer.class)
 	public int generarCodigoUP();
 	

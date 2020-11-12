@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.cientifica.convivirx.mappers.CuotaMapper">
+
+	<resultMap id="cuotaResultMap"
+		type="edu.cientifica.convivirx.model.Cuota">
+
+		<id column="id_cuota" property="id" />
+		<result column="num_cuota" property="numCuota" />
+		<result column="titulo" property="titulo" />
+		<result column="anio" property="anio" />
+		<result column="mes" property="mes" />
+		<result column="fecha_emision" property="fechaEmision" />
+		<result column="fecha_vencimiento" property="fechaVencimiento" />
+		<result column="monto_total" property="montoTotal" />
+
+		<association column="id_uprivada" property="unidadPrivada"
+			javaType="edu.cientifica.convivirx.model.UnidadPrivada"
+			resultMap="edu.cientifica.convivirx.mappers.UnidadPrivadaMapper.unidadPrivadaResultMap" />
+
+	</resultMap>
+
+	<select id="listaCuota" resultMap="cuotaResultMap">
+		SELECT
+		up.id_uprivada,
+		up.tipo_unidad,
+		up.numeracion,
+		up.tipo_unidad,
+		up.zona,
+		up.id_uinmobiliaria,
+		c.id_cuota,
+		c.num_cuota,
+		c.titulo,
+		c.anio,
+		c.mes,
+		c.fecha_emision,
+		c.fecha_vencimiento,
+		sum(d.monto) monto_total
+		FROM db_convivir2.cuota c
+		INNER JOIN db_convivir2.unidadprivada up
+		ON c.id_uprivada = up.id_uprivada
+		INNER JOIN detalle d
+		ON c.id_cuota = d.id_cuota
+		GROUP BY
+		c.id_cuota,
+		c.num_cuota,
+		c.titulo,
+		c.anio,
+		c.mes,
+		c.fecha_emision,
+		c.fecha_vencimiento,
+		up.id_uprivada,
+		up.tipo_unidad,
+		up.numeracion,
+		up.tipo_unidad,
+		up.zona,
+		up.id_uinmobiliaria
+	</select>
+	
+	</mapper>

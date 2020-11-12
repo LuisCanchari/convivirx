@@ -54,6 +54,7 @@
 			<img src="/img/fotoheader.png" th:src="@{/img/fotoheader.png}" alt="fotoheader">
 
 		</div>
+    
     <div class="topnav">
           <a href="#" th:href="@{/principal}">Inicio</a>
           <a href="#" th:href="@{/uprivada/lista}">Unidades Privadas</a>
@@ -64,54 +65,46 @@
           <a href="#" th:href="@{/gasto/lista}">Gastos</a>
 
     </div>
+    
 		<div class="principal">
-
-			<a href="#" th:href="@{/uprivada/form}" class="btn btn-success">
-				<i class="fa fa-plus" aria-hidden="true"></i> Nueva Unidad Privada
-			</a>
 
 			<table class="table table-light">
 				<thead class="thead-light">
 					<tr>
-						<th>Id</th>
-						<th>U Inmobiliaria</th>
-						<th>Tipo Unidad</th>
-						<th>Numeracion</th>
-						<th>Zona</th>
-						<th>Edit</th>
-
+						<th>UPrivada</th>
+						<th>Numero</th>
+						<th>Cuota</th>
+						<th>Monto</th>
+						<th>Accion</th>
 					</tr>
 				</thead>
 
 				<tbody>
-					<tr th:if="${unidades.empty}">
+					<tr th:if="${cuotas.empty}">
 						<td>No existen resultados</td>
 					</tr>
-					<tr th:each="unidad: ${unidades}">
+					<tr th:each="cuota: ${cuotas}">
 						<td>
-							<span th:text="${unidad.id}">1</span>
+							<span th:text="${cuota.unidadPrivada.id}? ${cuota.unidadPrivada.id}: ''">id</span>
 						</td>
 
 						<td>
-							<span th:text="${unidad.unidadInmobiliaria}? ${unidad.unidadInmobiliaria.nombreCorto}: ''">Condominio X</span>
+							<span th:text="${cuota.unidadPrivada.numeracion}? ${cuota.unidadPrivada.numeracion}: ''">Numero</span>
 						</td>
 
 						<td>
-							<span th:text="${unidad.tipoUnidad}">Vivienda</span>
+							<span th:text="${cuota.numCuota}">numero</span>
 						</td>
 
 						<td>
-							<span th:text="${unidad.numeracion}">101 - A</span>
+							<span th:text="${cuota.montoTotal}">Monto</span>
 						</td>
 
-						<td>
-							<span th:text="${unidad.zona}">101 - A</span>
-						</td>
-
+						
 						<td>
 							<span > 
-							 <a href="#" th:href="@{'/uprivada/edit/'+${unidad.id}}">
-									<i class="fa fa-pencil-square" aria-hidden="true"></i> Edit
+							 <a href="#" th:href="@{'/cuota/detalle/'+${cuota.id}}">
+									<i class="fa fa-pencil-square" aria-hidden="true"></i> Detalle
 								</a>
 							</span> 
 							

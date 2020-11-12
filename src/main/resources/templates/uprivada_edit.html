@@ -59,8 +59,18 @@
     <div id=foto>
       <img src="/img/fotoheader.png" th:src="@{/img/fotoheader.png}"
         alt="fotoheader">
+    </div>
+   <div class="topnav">
+          <a href="#" th:href="@{/principal}">Inicio</a>
+          <a href="#" th:href="@{/uprivada/lista}">Unidades Privadas</a>
+          <a href="#" th:href="@{/residente/lista}">Residentes</a>
+          <a href="#" th:href="@{/cuota/lista}">Cuotas</a>
+          <a href="#" th:href="@{/comunicado/lista}">Comunicados</a>
+          <a href="#" th:href="@{/visita/lista}">Visitas</a>
+          <a href="#" th:href="@{/gasto/lista}">Gastos</a>
 
     </div>
+    
     <div class="principal">
 
       <form action="" th:action="@{/uprivada/actualizar}" method="post"
