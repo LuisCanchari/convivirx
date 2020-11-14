@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="edu.cientifica.convivirx.mappers.PersonaMapper">
+
+	<resultMap id="personaResultMap"
+		type="edu.cientifica.convivirx.model.Persona">
+		<id column="id_persona" property="id" />
+		<result column="tipo_documento" property="tipoDocumento" />
+		<result column="num_documento" property="numDocumento" />
+		<result column="nombre" property="nombre" />
+		<result column="primer_apellido" property="primerApellido" />
+		<result column="segundo_apellido" property="segundoApellido" />
+		<result column="fecha_nacimiento" property="fechaNacimiento" />
+	</resultMap>
+	<select id="selectListaPersona" resultMap="personaResultMap">
+	   SELECT
+	     p.id_persona,
+	     p.tipo_documento,
+	     p.num_documento,
+	     p.nombre,
+	     p.primer_apellido,
+	     p.segundo_apellido,
+	     p.fecha_nacimiento
+	   FROM persona p
+	</select>
+	
+</mapper>

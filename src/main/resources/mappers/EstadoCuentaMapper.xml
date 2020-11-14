@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="edu.cientifica.convivirx.mappers.EstadoCuentaMapper">
+	<resultMap id="estadoCuentaResultMap"
+		type="edu.cientifica.convivirx.model.EstadoCuenta">
+		<id column="id_estado_cuenta" property="id" />
+		<result column="total_cargo" property="totalCargo" />
+		<result column="total_abono" property="totalAbono" />
+		<result column="total_deuda" property="totalDeuda" />
+		<association column="id_uprivada" property="unidadPrivada"
+			javaType="edu.cientifica.convivirx.model.EstadoCuenta"
+			resultMap="edu.cientifica.convivirx.mappers.UnidadPrivadaMapper.unidadPrivadaResultMap" />
+		<collection property="listaCuota" javaType="ArrayList"
+			column="id_cuota" ofType="edu.cientifica.convivirx.model.Cuota"
+			select="edu.cientifica.convivirx.mappers.CuotaMapper.selectCuotaForUprivada" />
+
+		<collection property="listaAbono" javaType="ArrayList"
+			column="id_abono" ofType="edu.cientifica.convivirx.model.Abono"
+			select="edu.cientifica.convivirx.mappers.AbonoMapper.selectAbonoForUprivada" />
+	</resultMap>
+
+	<select id="selectEstadoCuentaForUnidadPrivada"
+		resultMap="estadoCuentaResultMap">
+		SELECT
+		up.id_uprivada id_estado_cuenta,
+		ui.id_uinmobiliaria, ui.nombre_corto, ui.nombre_largo, ui.des_direccion, ui.ubigeo,
+		up.id_uprivada, up.tipo_unidad, up.numeracion, up.zona,
+		p.id_persona, p.tipo_documento, p.num_documento, p.nombre, p.primer_apellido,
+		p.segundo_apellido, p.fecha_nacimiento,
+
+		IFNULL((SELECT sum(d.monto) total_monto
+		FROM cuota c
+		INNER JOIN detalle d
+		ON c.id_cuota = d.id_cuota
+		GROUP BY c.id_uprivada
+		HAVING c.id_uprivada = up.id_uprivada ),0) total_cargo,
+
+		IFNULL((SELECT sum(a.monto_abono) total_abonado
+		FROM cuota c
+		INNER JOIN abono a
+		ON c.id_cuota = a.id_cuota
+		GROUP BY c.id_uprivada
+		HAVING c.id_uprivada = up.id_uprivada),0) total_abono,
+
+		IFNULL((SELECT sum(d.monto) total_monto
+		FROM cuota c
+		INNER JOIN detalle d
+		ON c.id_cuota = d.id_cuota
+		GROUP BY c.id_uprivada
+		HAVING c.id_uprivada = up.id_uprivada ),0) -
+
+		IFNULL((SELECT sum(a.monto_abono) total_abonado
+		FROM cuota c
+		INNER JOIN abono a
+		ON c.id_cuota = a.id_cuota
+		WHERE a.validado = 1
+		GROUP BY c.id_uprivada
+		HAVING c.id_uprivada = up.id_uprivada),0) total_deuda
+
+		FROM unidadprivada up
+		INNER JOIN unidadinmobiliaria ui
+		ON up.id_uinmobiliaria = ui.id_uinmobiliaria
+		INNER JOIN persona_up pup
+		ON up.id_uprivada = pup.id_uprivada
+		INNER JOIN persona p
+		ON pup.id_persona = p.id_persona
+		WHERE pup.id_tipo_relacion = 1
+		AND up.id_uprivada = #{id}
+
+	</select>
+	
+	<select id="selectEstadoCuenta"
+    resultMap="estadoCuentaResultMap">
+    SELECT
+    up.id_uprivada id_estado_cuenta,
+    ui.id_uinmobiliaria, ui.nombre_corto, ui.nombre_largo, ui.des_direccion,
+    up.id_uprivada, up.tipo_unidad, up.numeracion, up.zona,
+    p.id_persona, p.tipo_documento, p.num_documento, p.nombre, p.primer_apellido,
+    p.segundo_apellido, p.fecha_nacimiento,
+
+    IFNULL((SELECT sum(d.monto) total_monto
+    FROM cuota c
+    INNER JOIN detalle d
+    ON c.id_cuota = d.id_cuota
+    GROUP BY c.id_uprivada
+    HAVING c.id_uprivada = up.id_uprivada ),0) total_cargo,
+
+    IFNULL((SELECT sum(a.monto_abono) total_abonado
+    FROM cuota c
+    INNER JOIN abono a
+    ON c.id_cuota = a.id_cuota
+    GROUP BY c.id_uprivada
+    HAVING c.id_uprivada = up.id_uprivada),0) total_abono,
+
+    IFNULL((SELECT sum(d.monto) total_monto
+    FROM cuota c
+    INNER JOIN detalle d
+    ON c.id_cuota = d.id_cuota
+    GROUP BY c.id_uprivada
+    HAVING c.id_uprivada = up.id_uprivada ),0) -
+
+    IFNULL((SELECT sum(a.monto_abono) total_abonado
+    FROM cuota c
+    INNER JOIN abono a
+    ON c.id_cuota = a.id_cuota
+    WHERE a.validado = 1
+    GROUP BY c.id_uprivada
+    HAVING c.id_uprivada = up.id_uprivada),0) total_deuda
+
+    FROM unidadprivada up
+    INNER JOIN unidadinmobiliaria ui
+    ON up.id_uinmobiliaria = ui.id_uinmobiliaria
+    INNER JOIN persona_up pup
+    ON up.id_uprivada = pup.id_uprivada
+    INNER JOIN persona p
+    ON pup.id_persona = p.id_persona
+    WHERE pup.id_tipo_relacion = 1
+  </select>
+
+
+</mapper>

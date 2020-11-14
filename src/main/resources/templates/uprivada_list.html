@@ -78,6 +78,7 @@
 						<th>Tipo Unidad</th>
 						<th>Numeracion</th>
 						<th>Zona</th>
+            <th>Propietario</th>
 						<th>Edit</th>
 
 					</tr>
@@ -107,6 +108,10 @@
 						<td>
 							<span th:text="${unidad.zona}">101 - A</span>
 						</td>
+            
+            <td>
+              <span th:text="${unidad.propietario.nombre} + ' ' + ${unidad.propietario.primerApellido}">101 - A</span>
+            </td>
 
 						<td>
 							<span > 

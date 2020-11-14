@@ -16,15 +16,4 @@ public class UInmobiliariaController {
 	public String listaUnidadInmobiliaria() {
 		return "";
 	}
-	
-	@GetMapping("/listaJason")
-	public String listJsonUnidadInmobiliaria() {
-		//conectar a bd
-		//armar json
-		
-		return "inmobiliarias";
-		
-		
-	}
-
 }

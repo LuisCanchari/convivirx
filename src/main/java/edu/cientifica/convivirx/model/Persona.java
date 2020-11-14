@@ -75,4 +75,12 @@ public class Persona {
 	public void setFechaNacimiento(Date fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
+	@Override
+	public String toString() {
+		return "Persona [id=" + id + ", tipoDocumento=" + tipoDocumento + ", numDocumento=" + numDocumento + ", nombre="
+				+ nombre + ", primerApellido=" + primerApellido + ", segundoApellido=" + segundoApellido
+				+ ", fechaNacimiento=" + fechaNacimiento + "]";
+	}
+	
+	
 }

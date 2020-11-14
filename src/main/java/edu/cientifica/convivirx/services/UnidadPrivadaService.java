@@ -16,12 +16,10 @@ public interface UnidadPrivadaService {
 	public int eliminarUnidadPrivada(int id);
 	public UnidadPrivada unidadPrivadaById(int id);
 	
-	
 	public int generarCodigoUP();
 	
 	public UnidadPrivada save(UnidadPrivada unidadPrivada);
 	public boolean delete(int unidadPrivadaId);
-	
 	public List<UnidadPrivada> unidadPrivadaByCondominio(int condominioId);
 	
 	

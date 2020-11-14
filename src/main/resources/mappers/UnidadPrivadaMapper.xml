@@ -11,10 +11,76 @@
 		<association column="id_uinmobiliaria" property="unidadInmobiliaria"
 			javaType="edu.cientifica.convivirx.model.UnidadInmobiliaria" 
 			resultMap="edu.cientifica.convivirx.mappers.UnidadInmobiliariaMapper.unidadInmobiliariaResultMap" />
+		
+		<association column="id_persona" property="propietario"
+      javaType="edu.cientifica.convivirx.model.Propietario" 
+      resultMap="edu.cientifica.convivirx.mappers.PropietarioMapper.propietarioResultMap" />
 			
 	</resultMap>
 	
-	<select id="listaunidadesinmobiliarias">
-	  SELECT * FROM unidadinmobiliaria
+	<select id="findAllUnidadPrivada" resultMap="unidadPrivadaResultMap">
+  SELECT 
+    up.*, ui.*, p.*
+  FROM unidadprivada up
+  INNER JOIN unidadinmobiliaria ui 
+    ON up.id_uinmobiliaria=ui.id_uinmobiliaria
+  INNER JOIN persona_up pup
+    ON up.id_uprivada = pup.id_uprivada
+    AND pup.id_tipo_relacion = '1' 
+  INNER JOIN persona p
+    ON pup.id_persona = p.id_persona
+  ORDER BY up.id_uprivada asc
+    
 	</select>
+	
+	<select id="findUnidadPrivadaById" resultMap="unidadPrivadaResultMap">
+	SELECT 
+    up.*, ui.*, p.*
+  FROM unidadprivada up
+  INNER JOIN unidadinmobiliaria ui 
+    ON up.id_uinmobiliaria=ui.id_uinmobiliaria
+  INNER JOIN persona_up pup
+    ON up.id_uprivada = pup.id_uprivada
+    AND pup.id_tipo_relacion = '1' 
+  INNER JOIN persona p
+    ON pup.id_persona = p.id_persona
+  WHERE
+    up.id_uprivada=#{id}
+  ORDER BY up.id_uprivada asc
+	</select>
+	
+	<insert id="insertUnidadPrivada" parameterType="edu.cientifica.convivirx.model.UnidadPrivada">
+	   INSERT INTO unidadprivada 
+	     (id_uprivada, tipo_unidad, numeracion, zona, id_uinmobiliaria)
+     VALUES
+      (#{id}, #{tipoUnidad}, #{numeracion}, #{zona}, #{unidadInmobiliaria.id})
+	</insert>
+	
+	<insert id="insertUnidadPrivadaPropietario" parameterType="edu.cientifica.convivirx.model.UnidadPrivada">
+	   INSERT INTO persona_up 
+       (id_uprivada, id_persona,id_tipo_relacion)
+     VALUES
+      (#{id}, #{propietario.id}, '1')
+	</insert>
+	
+	<update id="updateUnidadPrivada" parameterType="edu.cientifica.convivirx.model.UnidadPrivada">
+	   UPDATE 
+	     unidadprivada
+	   SET 
+	     tipo_unidad= #{tipoUnidad},
+	     numeracion=#{numeracion},
+	     zona=#{zona}, 
+       id_uinmobiliaria=#{unidadInmobiliaria.id} 
+      WHERE id_uprivada= #{id}
+	</update>
+	
+	<update id="updateUnidadPrivadaPropietario" parameterType="edu.cientifica.convivirx.model.UnidadPrivada">
+	   UPDATE 
+       persona_up
+     SET
+       id_persona = #{propietario.id}
+     WHERE 
+       id_uprivada= #{id} 
+  </update>
+	
 </mapper>

@@ -19,8 +19,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import edu.cientifica.convivirx.model.Persona;
 import edu.cientifica.convivirx.model.UnidadInmobiliaria;
 import edu.cientifica.convivirx.model.UnidadPrivada;
+import edu.cientifica.convivirx.services.PersonaService;
 import edu.cientifica.convivirx.services.UnidadInmobiliariaService;
 import edu.cientifica.convivirx.services.UnidadPrivadaService;
 
@@ -30,9 +32,12 @@ public class UPrivadaController {
 	protected final Log LOG =  LogFactory.getLog(this.getClass());
 
 	@Autowired
-	UnidadPrivadaService unidadPrivadaService;
+	private UnidadPrivadaService unidadPrivadaService;
 	@Autowired
-	UnidadInmobiliariaService unidadInmobiliariaService;
+	private UnidadInmobiliariaService unidadInmobiliariaService;
+	
+	@Autowired
+	private PersonaService personaService;
 
 	@GetMapping("/lista")
 	public String listaUnidad(Model model) {
@@ -44,15 +49,16 @@ public class UPrivadaController {
 
 	@GetMapping("/form")
 	public String formularioUnidad(Model model)  {
-		List<UnidadInmobiliaria> listaUnidadInmobiliara= null;
-		UnidadPrivada unidadPrivada = new UnidadPrivada();
-		listaUnidadInmobiliara = unidadInmobiliariaService.listarUnidadInmobiliaria();
+		List<UnidadInmobiliaria> listaUnidadInmobiliara = unidadInmobiliariaService.listarUnidadInmobiliaria();
+		List<Persona> listaPersona =  personaService.listaPersona();
 		
+		UnidadPrivada unidadPrivada = new UnidadPrivada();
 		unidadPrivada.setId(unidadPrivadaService.generarCodigoUP());
 		
 		
 		model.addAttribute("Uprivada", unidadPrivada);
 		model.addAttribute("listaUnidadInmobiliaria",listaUnidadInmobiliara);
+		model.addAttribute("listaPersona",listaPersona);
 
 		return "uprivada_form";
 	}
@@ -60,11 +66,13 @@ public class UPrivadaController {
 	@GetMapping("/edit/{id}")
 	public String frmEditarUnidad(Model model, @PathVariable(name="id") int id)  {
 		List<UnidadInmobiliaria> listaUnidadInmobiliara = unidadInmobiliariaService.listarUnidadInmobiliaria();
+		List<Persona> listaPersona =  personaService.listaPersona();
 		
 		UnidadPrivada unidadPrivada = unidadPrivadaService.unidadPrivadaById(id);
 		
 		model.addAttribute("Uprivada", unidadPrivada);
 		model.addAttribute("listaUnidadInmobiliaria",listaUnidadInmobiliara);
+		model.addAttribute("listaPersona",listaPersona);
 
 		return "uprivada_edit";
 	}
@@ -88,7 +96,7 @@ public class UPrivadaController {
 		try {
 			int result =unidadPrivadaService.registrarUnidadPrivada(unidadPrivada);
 		} catch (Exception e) {
-			LOG.info(e.getMessage());
+			LOG.error("UPrivadaController: "+ e.getMessage()+" "+e.getCause());
 		}
 
 		return "redirect:/uprivada/lista";

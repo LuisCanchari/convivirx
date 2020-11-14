@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.cientifica.convivirx.mappers.AbonoMapper">
+
+	<resultMap id="cuotaResultMap"
+		type="edu.cientifica.convivirx.model.Abono">
+
+		<id column="id_abono" property="id" />
+		<result column="tipo_abono" property="tipoAbono" />
+		<result column="fecha_abono" property="fechaAbono" />
+		<result column="monto_abono" property="montoAbono" />
+		<result column="validado" property="validado" />
+
+		<association column="id_cuota" property="cuota"
+			javaType="edu.cientifica.convivirx.model.Cuota"
+			resultMap="edu.cientifica.convivirx.mappers.CuotaMapper.cuotaResultMap" />
+	</resultMap>
+
+
+	<select id="selectAbonoForUprivada" resultMap="cuotaResultMap" resultType="edu.cientifica.convivirx.model.Abono">
+		SELECT
+		ui.id_uinmobiliaria, ui.nombre_corto, ui.nombre_largo, ui.des_direccion,
+		up.id_uprivada, up.tipo_unidad, up.numeracion, up.zona,
+		p.id_persona, p.tipo_documento, p.num_documento, p.nombre, p.primer_apellido,
+		p.segundo_apellido, p.fecha_nacimiento,
+		c.id_cuota, c.num_cuota, c.titulo, c.anio, c.mes, c.fecha_emision,
+		c.fecha_vencimiento,
+		a.id_abono, a.fecha_abono,a.monto_abono, a.validado, a.tipo_abono
+		FROM persona as p
+		INNER JOIN persona_up pup
+		ON p.id_persona = pup.id_persona
+		INNER JOIN unidadprivada up
+		ON pup.id_uprivada = up.id_uprivada
+		INNER JOIN unidadinmobiliaria ui
+		ON up.id_uinmobiliaria = ui.id_uinmobiliaria
+		INNER JOIN cuota c
+		ON up.id_uprivada = c.id_uprivada
+		INNER JOIN abono a
+		ON c.id_cuota = a.id_cuota
+		WHERE pup.id_tipo_relacion = 1
+		AND a.validado = 1
+		AND up.id_uprivada = #{id}
+		
+	</select>
+</mapper> 

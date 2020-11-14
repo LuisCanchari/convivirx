@@ -3,7 +3,6 @@ package edu.cientifica.convivirx.model;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 public class UnidadPrivada {
@@ -19,15 +18,17 @@ public class UnidadPrivada {
 	@Size(min = 2, max = 10, message = "La numeracion debe ser de dos digitos")
 	private String numeracion;
 
-	
-	@Size(min=2, message = "La zona debe tener mas de dos caracteres")
+	@Size(min = 2, message = "La zona debe tener mas de dos caracteres")
 	private String zona;
 
 	@NotNull
 	private UnidadInmobiliaria unidadInmobiliaria;
 
+	private Propietario propietario;
+
 	public UnidadPrivada() {
 		super();
+
 		// TODO Auto-generated constructor stub
 	}
 
@@ -81,10 +82,20 @@ public class UnidadPrivada {
 		this.unidadInmobiliaria = unidadInmobiliaria;
 	}
 
+	public Propietario getPropietario() {
+		return propietario;
+	}
+
+	public void setPropietario(Propietario propietario) {
+		this.propietario = propietario;
+	}
+	
+	
+
 	@Override
 	public String toString() {
 		return "UnidadPrivada [id=" + id + ", tipoUnidad=" + tipoUnidad + ", numeracion=" + numeracion + ", zona="
-				+ zona + ", unidadInmobiliaria=" + unidadInmobiliaria + "]";
+				+ zona + ", unidadInmobiliaria=" + unidadInmobiliaria + ", propietario=" + propietario + "]";
 	}
 
 }

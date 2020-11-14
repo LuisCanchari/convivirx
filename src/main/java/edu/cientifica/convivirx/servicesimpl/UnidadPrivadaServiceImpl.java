@@ -6,6 +6,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import edu.cientifica.convivirx.mappers.UnidadPrivadaMapper;
 import edu.cientifica.convivirx.model.UnidadPrivada;
@@ -18,11 +19,14 @@ public class UnidadPrivadaServiceImpl implements UnidadPrivadaService {
 	@Autowired // Inyecccion de dependencia
 	UnidadPrivadaMapper unidadPrivadaMapper;
 
+	@Transactional
 	@Override
 	public int registrarUnidadPrivada(UnidadPrivada unidadPrivada) {
 		int result;
+		LOG.info("UnidadPrivadaServiceImpl "+unidadPrivada.toString());
 		result = unidadPrivadaMapper.insertUnidadPrivada(unidadPrivada);
-		LOG.info("Numero de registros afectados : " + result);
+		unidadPrivadaMapper.insertUnidadPrivadaPropietario(unidadPrivada);
+		
 		return result;
 	}
 
@@ -33,11 +37,13 @@ public class UnidadPrivadaServiceImpl implements UnidadPrivadaService {
 		return unidadPrivadaMapper.findAllUnidadPrivada();
 	}
 
+	@Transactional
 	@Override
 	public int actualizarUnidadPrivada(UnidadPrivada unidadPrivada) {
 		int result;
 		result = unidadPrivadaMapper.updateUnidadPrivada(unidadPrivada);
-		LOG.info("Numero de registros afectados : " + result);
+		unidadPrivadaMapper.updateUnidadPrivadaPropietario(unidadPrivada);
+		
 		return result;
 	}
 
