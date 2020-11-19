@@ -5,7 +5,6 @@
 	<resultMap id="unidadPrivadaResultMap" type="edu.cientifica.convivirx.model.UnidadPrivada">
 		
 		<id column="id_uprivada" property="id" />
-		<result column="tipo_unidad" property="tipoUnidad" />
 		<result column="numeracion" property="numeracion" />
 		<result column="zona" property="zona" />
 		<association column="id_uinmobiliaria" property="unidadInmobiliaria"
@@ -15,12 +14,16 @@
 		<association column="id_persona" property="propietario"
       javaType="edu.cientifica.convivirx.model.Propietario" 
       resultMap="edu.cientifica.convivirx.mappers.PropietarioMapper.propietarioResultMap" />
+      
+    <association column="id_tipo_unidad" property="tipoUnidad"
+    javaType="edu.cientifica.convivirx.model.TipoUnidad"
+    resultMap="edu.cientifica.convivirx.mappers.TipoUnidadMapper.tipoUnidadResulMap"/>
 			
 	</resultMap>
 	
 	<select id="findAllUnidadPrivada" resultMap="unidadPrivadaResultMap">
   SELECT 
-    up.*, ui.*, p.*
+    up.*, ui.*, p.*, tu.*
   FROM unidadprivada up
   INNER JOIN unidadinmobiliaria ui 
     ON up.id_uinmobiliaria=ui.id_uinmobiliaria
@@ -29,13 +32,16 @@
     AND pup.id_tipo_relacion = '1' 
   INNER JOIN persona p
     ON pup.id_persona = p.id_persona
+  INNER JOIN tipounidad tu
+    ON up.id_tipo_unidad = tu.id
   ORDER BY up.id_uprivada asc
+  
     
 	</select>
 	
 	<select id="findUnidadPrivadaById" resultMap="unidadPrivadaResultMap">
 	SELECT 
-    up.*, ui.*, p.*
+    up.*, ui.*, p.*, tu.*
   FROM unidadprivada up
   INNER JOIN unidadinmobiliaria ui 
     ON up.id_uinmobiliaria=ui.id_uinmobiliaria
@@ -44,6 +50,8 @@
     AND pup.id_tipo_relacion = '1' 
   INNER JOIN persona p
     ON pup.id_persona = p.id_persona
+  INNER JOIN tipounidad tu
+    ON up.id_tipo_unidad = tu.id
   WHERE
     up.id_uprivada=#{id}
   ORDER BY up.id_uprivada asc
@@ -51,9 +59,9 @@
 	
 	<insert id="insertUnidadPrivada" parameterType="edu.cientifica.convivirx.model.UnidadPrivada">
 	   INSERT INTO unidadprivada 
-	     (id_uprivada, tipo_unidad, numeracion, zona, id_uinmobiliaria)
+	     (id_uprivada, id_tipo_unidad, numeracion, zona, id_uinmobiliaria)
      VALUES
-      (#{id}, #{tipoUnidad}, #{numeracion}, #{zona}, #{unidadInmobiliaria.id})
+      (#{id}, #{tipoUnidad.id}, #{numeracion}, #{zona}, #{unidadInmobiliaria.id})
 	</insert>
 	
 	<insert id="insertUnidadPrivadaPropietario" parameterType="edu.cientifica.convivirx.model.UnidadPrivada">
@@ -67,7 +75,7 @@
 	   UPDATE 
 	     unidadprivada
 	   SET 
-	     tipo_unidad= #{tipoUnidad},
+	     id_tipo_unidad= #{tipoUnidad.id},
 	     numeracion=#{numeracion},
 	     zona=#{zona}, 
        id_uinmobiliaria=#{unidadInmobiliaria.id} 

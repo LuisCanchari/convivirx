@@ -23,6 +23,7 @@ import edu.cientifica.convivirx.model.Persona;
 import edu.cientifica.convivirx.model.UnidadInmobiliaria;
 import edu.cientifica.convivirx.model.UnidadPrivada;
 import edu.cientifica.convivirx.services.PersonaService;
+import edu.cientifica.convivirx.services.TipoUnidadService;
 import edu.cientifica.convivirx.services.UnidadInmobiliariaService;
 import edu.cientifica.convivirx.services.UnidadPrivadaService;
 
@@ -33,11 +34,16 @@ public class UPrivadaController {
 
 	@Autowired
 	private UnidadPrivadaService unidadPrivadaService;
+	
 	@Autowired
 	private UnidadInmobiliariaService unidadInmobiliariaService;
 	
 	@Autowired
 	private PersonaService personaService;
+	
+	@Autowired
+	private TipoUnidadService tipoUnidadService;
+	
 
 	@GetMapping("/lista")
 	public String listaUnidad(Model model) {
@@ -55,7 +61,7 @@ public class UPrivadaController {
 		UnidadPrivada unidadPrivada = new UnidadPrivada();
 		unidadPrivada.setId(unidadPrivadaService.generarCodigoUP());
 		
-		
+		model.addAttribute("listaTipoUnidad",tipoUnidadService.listaTipoUnidad());
 		model.addAttribute("Uprivada", unidadPrivada);
 		model.addAttribute("listaUnidadInmobiliaria",listaUnidadInmobiliara);
 		model.addAttribute("listaPersona",listaPersona);
@@ -70,6 +76,7 @@ public class UPrivadaController {
 		
 		UnidadPrivada unidadPrivada = unidadPrivadaService.unidadPrivadaById(id);
 		
+		model.addAttribute("listaTipoUnidad",tipoUnidadService.listaTipoUnidad());
 		model.addAttribute("Uprivada", unidadPrivada);
 		model.addAttribute("listaUnidadInmobiliaria",listaUnidadInmobiliara);
 		model.addAttribute("listaPersona",listaPersona);

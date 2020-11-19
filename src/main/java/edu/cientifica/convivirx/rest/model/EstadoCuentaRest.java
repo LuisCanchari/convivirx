@@ -1,4 +1,4 @@
-package edu.cientifica.convivirx.model;
+package edu.cientifica.convivirx.rest.model;
 
 public class EstadoCuentaRest {
 	 

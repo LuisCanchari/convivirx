@@ -1,7 +1,9 @@
 package edu.cientifica.convivirx.model;
 
 import java.sql.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Cuota {
 	private int id;
@@ -13,6 +15,7 @@ public class Cuota {
 	private Date fechaVencimiento;
 	private UnidadPrivada unidadPrivada;
 	private double montoTotal;
+
 
 	public Cuota() {
 		super();

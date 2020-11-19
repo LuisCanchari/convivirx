@@ -23,7 +23,7 @@
 	<select id="selectCuota" resultMap="cuotaResultMap">
 		SELECT
 		ui.id_uinmobiliaria, ui.nombre_corto, ui.nombre_largo, ui.des_direccion,
-		up.id_uprivada, up.tipo_unidad, up.numeracion, up.zona,
+		up.id_uprivada, up.id_tipo_unidad, up.numeracion, up.zona,
 		p.id_persona, p.tipo_documento, p.num_documento, p.nombre, p.primer_apellido,
 		p.segundo_apellido, p.fecha_nacimiento,
 		c.id_cuota, c.num_cuota, c.titulo, c.anio, c.mes, c.fecha_emision,
@@ -43,7 +43,7 @@
 		WHERE pup.id_tipo_relacion = 1
 		GROUP BY
 		ui.id_uinmobiliaria, ui.nombre_corto, ui.nombre_largo, ui.des_direccion,
-		up.id_uprivada, up.tipo_unidad, up.numeracion, up.zona,
+		up.id_uprivada, up.id_tipo_unidad, up.numeracion, up.zona,
 		p.id_persona, p.tipo_documento, p.num_documento, p.nombre, p.primer_apellido,
 		p.segundo_apellido, p.fecha_nacimiento,
 		c.id_cuota, c.num_cuota, c.titulo, c.anio, c.mes, c.fecha_emision,
@@ -53,9 +53,9 @@
 	<select id="listaCuota" resultMap="cuotaResultMap">
 		SELECT
 		up.id_uprivada,
-		up.tipo_unidad,
+		up.id_tipo_unidad,
 		up.numeracion,
-		up.tipo_unidad,
+		up.id_tipo_unidad,
 		up.zona,
 		up.id_uinmobiliaria,
 		c.id_cuota,
@@ -67,8 +67,8 @@
 		c.fecha_vencimiento,
 		sum(d.monto) monto_total
 		FROM
-		db_convivir2.cuota c
-		INNER JOIN db_convivir2.unidadprivada up
+		cuota c
+		INNER JOIN unidadprivada up
 		ON
 		c.id_uprivada = up.id_uprivada
 		INNER JOIN detalle d
@@ -83,9 +83,9 @@
 		c.fecha_emision,
 		c.fecha_vencimiento,
 		up.id_uprivada,
-		up.tipo_unidad,
+		up.id_tipo_unidad,
 		up.numeracion,
-		up.tipo_unidad,
+		up.id_tipo_unidad,
 		up.zona,
 		up.id_uinmobiliaria
 	</select>
@@ -93,7 +93,7 @@
 	<select id="selectCuotaForUprivada" resultMap="cuotaResultMap" resultType="edu.cientifica.convivirx.model.Cuota">
     SELECT
     ui.id_uinmobiliaria, ui.nombre_corto, ui.nombre_largo, ui.des_direccion,
-    up.id_uprivada, up.tipo_unidad, up.numeracion, up.zona,
+    up.id_uprivada, up.id_tipo_unidad, up.numeracion, up.zona,
     p.id_persona, p.tipo_documento, p.num_documento, p.nombre, p.primer_apellido,
     p.segundo_apellido, p.fecha_nacimiento,
     c.id_cuota, c.num_cuota, c.titulo, c.anio, c.mes, c.fecha_emision,
@@ -113,7 +113,7 @@
     WHERE pup.id_tipo_relacion = 1
     GROUP BY
     ui.id_uinmobiliaria, ui.nombre_corto, ui.nombre_largo, ui.des_direccion,
-    up.id_uprivada, up.tipo_unidad, up.numeracion, up.zona,
+    up.id_uprivada, up.id_tipo_unidad, up.numeracion, up.zona,
     p.id_persona, p.tipo_documento, p.num_documento, p.nombre, p.primer_apellido,
     p.segundo_apellido, p.fecha_nacimiento,
     c.id_cuota, c.num_cuota, c.titulo, c.anio, c.mes, c.fecha_emision,

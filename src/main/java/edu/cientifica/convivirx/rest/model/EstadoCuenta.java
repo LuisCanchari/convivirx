@@ -1,6 +1,10 @@
-package edu.cientifica.convivirx.model;
+package edu.cientifica.convivirx.rest.model;
 
 import java.util.List;
+
+import edu.cientifica.convivirx.model.Abono;
+import edu.cientifica.convivirx.model.Cuota;
+import edu.cientifica.convivirx.model.UnidadPrivada;
 
 public class EstadoCuenta {
 	private int id;

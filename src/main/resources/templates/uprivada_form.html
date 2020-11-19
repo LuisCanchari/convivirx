@@ -95,9 +95,12 @@
             </div>
             <div class="col-6">
               <select class="form-control" id="tipoUnidad"
-                name="tipoUnidad" th:field="*{tipoUnidad}">
-                <option value="1">Vivienda</option>
-                <option value="2">Departamento</option>
+                name="tipoUnidad" th:field="*{tipoUnidad.id}">
+                <option th:value="0" th:text="---Seleccionar---"></option>
+                <option
+                  th:each="tipoUnidad: ${listaTipoUnidad}"
+                  th:value="${tipoUnidad.id}"
+                  th:text="${tipoUnidad.descripcion}"></option>
               </select>
             </div>
           </div>

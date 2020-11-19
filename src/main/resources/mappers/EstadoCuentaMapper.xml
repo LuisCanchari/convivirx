@@ -3,13 +3,13 @@
 <mapper
 	namespace="edu.cientifica.convivirx.mappers.EstadoCuentaMapper">
 	<resultMap id="estadoCuentaResultMap"
-		type="edu.cientifica.convivirx.model.EstadoCuenta">
+		type="edu.cientifica.convivirx.rest.model.EstadoCuenta">
 		<id column="id_estado_cuenta" property="id" />
 		<result column="total_cargo" property="totalCargo" />
 		<result column="total_abono" property="totalAbono" />
 		<result column="total_deuda" property="totalDeuda" />
 		<association column="id_uprivada" property="unidadPrivada"
-			javaType="edu.cientifica.convivirx.model.EstadoCuenta"
+			javaType="edu.cientifica.convivirx.model.UnidadPrivada"
 			resultMap="edu.cientifica.convivirx.mappers.UnidadPrivadaMapper.unidadPrivadaResultMap" />
 		<collection property="listaCuota" javaType="ArrayList"
 			column="id_cuota" ofType="edu.cientifica.convivirx.model.Cuota"
@@ -25,7 +25,7 @@
 		SELECT
 		up.id_uprivada id_estado_cuenta,
 		ui.id_uinmobiliaria, ui.nombre_corto, ui.nombre_largo, ui.des_direccion, ui.ubigeo,
-		up.id_uprivada, up.tipo_unidad, up.numeracion, up.zona,
+		up.id_uprivada, up.id_tipo_unidad, up.numeracion, up.zona,
 		p.id_persona, p.tipo_documento, p.num_documento, p.nombre, p.primer_apellido,
 		p.segundo_apellido, p.fecha_nacimiento,
 
@@ -75,7 +75,7 @@
     SELECT
     up.id_uprivada id_estado_cuenta,
     ui.id_uinmobiliaria, ui.nombre_corto, ui.nombre_largo, ui.des_direccion,
-    up.id_uprivada, up.tipo_unidad, up.numeracion, up.zona,
+    up.id_uprivada, up.id_tipo_unidad, up.numeracion, up.zona,
     p.id_persona, p.tipo_documento, p.num_documento, p.nombre, p.primer_apellido,
     p.segundo_apellido, p.fecha_nacimiento,
 

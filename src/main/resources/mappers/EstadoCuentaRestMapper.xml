@@ -3,7 +3,7 @@
 <mapper
 	namespace="edu.cientifica.convivirx.mappers.EstadoCuentaRestMapper">
 	<resultMap id="estadoCuentaRestResultMap"
-		type="edu.cientifica.convivirx.model.EstadoCuentaRest">
+		type="edu.cientifica.convivirx.rest.model.EstadoCuentaRest">
 <!-- 		<id column="id_estado_cuenta" property="id" /> -->
 		<result column="id_uprivada" property="idUPrivada" />
 		<result column="id_uinmobiliaria" property="idUInmobiliaria" />
@@ -17,7 +17,7 @@
 		resultMap="estadoCuentaRestResultMap">
     SELECT
       
-      up.id_uprivada, up.id_uinmobiliaria, up.numeracion, up.tipo_unidad,
+      up.id_uprivada, up.id_uinmobiliaria, up.numeracion, up.id_tipo_unidad,
       CONCAT_WS(" ", p.nombre,p.primer_apellido) nombre_propietario,
       IFNULL((SELECT sum(d.monto) total_monto
       FROM cuota c
@@ -44,8 +44,7 @@
 	<select id="selectEstadoCuentaRestForUnidadPrivada"
     resultMap="estadoCuentaRestResultMap">
     SELECT
-      
-      up.id_uprivada, up.id_uinmobiliaria, up.numeracion, up.tipo_unidad,
+      up.id_uprivada, up.id_uinmobiliaria, up.numeracion, up.id_tipo_unidad,
       CONCAT_WS(" ", p.nombre,p.primer_apellido) nombre_propietario,
       IFNULL((SELECT sum(d.monto) total_monto
       FROM cuota c

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="edu.cientifica.convivirx.mappers.EstadoCuentaUPrivadaMapper">
+	<resultMap id="estadoCuentaUPrivadaResultMap"
+		type="edu.cientifica.convivirx.rest.model.EstadoCuentaUPrivada"
+    extends="edu.cientifica.convivirx.mappers.EstadoCuentaMasterMapper.estadoCuentaMasterResultMap">
+		
+		<association column="id_uprivada" property="unidadPrivada"
+      javaType="edu.cientifica.convivirx.model.UnidadPrivada"
+      resultMap="edu.cientifica.convivirx.mappers.UnidadPrivadaMapper.unidadPrivadaResultMap"/>
+		
+	</resultMap>
+	
+	<select id="selectEstadoCuentaUPrivadaAll" resultMap="estadoCuentaUPrivadaResultMap">
+   SELECT
+    up.id_uprivada id_estado_cuenta,
+    ui.id_uinmobiliaria, ui.nombre_corto, ui.nombre_largo, 
+    ui.des_direccion,ui.ubigeo,ui.latitud_map, ui.longitud_map,
+    up.id_uprivada, up.id_tipo_unidad, up.numeracion, up.zona,
+    p.id_persona, p.tipo_documento, p.num_documento, p.nombre, p.primer_apellido,
+    p.segundo_apellido, p.fecha_nacimiento,
+    tu.id,tu.descripcion,
+
+    IFNULL((SELECT sum(d.monto) total_monto
+    FROM cuota c
+    INNER JOIN detalle d
+    ON c.id_cuota = d.id_cuota
+    WHERE c.id_uprivada = up.id_uprivada ),0) total_cargo,
+
+    IFNULL((SELECT sum(a.monto_abono) total_abonado
+    FROM cuota c
+    INNER JOIN abono a
+    ON c.id_cuota = a.id_cuota
+    WHERE c.id_uprivada = up.id_uprivada ),0) total_cargo
+
+    FROM unidadprivada up
+    INNER JOIN unidadinmobiliaria ui
+    ON up.id_uinmobiliaria = ui.id_uinmobiliaria
+    INNER JOIN persona_up pup
+    ON up.id_uprivada = pup.id_uprivada
+    INNER JOIN persona p
+    ON pup.id_persona = p.id_persona
+    AND pup.id_tipo_relacion = 1
+    INNER JOIN tipounidad tu
+    ON up.id_tipo_unidad = tu.id
+    ORDER BY up.id_uprivada
+    
+	</select>
+
+</mapper>

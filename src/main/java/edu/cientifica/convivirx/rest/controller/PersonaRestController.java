@@ -1,4 +1,4 @@
-package edu.cientifica.convivirx.restcontroller;
+package edu.cientifica.convivirx.rest.controller;
 
 import java.util.List;
 

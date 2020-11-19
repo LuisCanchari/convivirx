@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import edu.cientifica.convivirx.mappers.EstadoCuentaRestMapper;
-import edu.cientifica.convivirx.model.EstadoCuentaRest;
+import edu.cientifica.convivirx.rest.model.EstadoCuentaRest;
 import edu.cientifica.convivirx.services.EstadoCuentaRestService;
 
 @Service
