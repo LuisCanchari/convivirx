@@ -61,5 +61,4 @@ public interface UnidadPrivadaMapper {
 	public List<UnidadPrivada> findUnidadPrivadaByCondomio(int condominioId);
 	
 	
-	
 }

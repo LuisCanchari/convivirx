@@ -7,7 +7,6 @@ import org.apache.ibatis.annotations.ResultMap;
 import org.apache.ibatis.annotations.Select;
 
 import edu.cientifica.convivirx.model.UnidadInmobiliaria;
-import edu.cientifica.convivirx.model.UnidadPrivada;
 
 @Mapper
 public interface UnidadInmobiliariaMapper {

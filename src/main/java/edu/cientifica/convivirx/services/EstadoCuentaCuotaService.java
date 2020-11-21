@@ -11,5 +11,7 @@ import edu.cientifica.convivirx.rest.model.EstadoCuentaUPrivada;
 public interface EstadoCuentaCuotaService {
 	
 	public List<EstadoCuentaCuota> listaEstadoCuentaCuotaAll();
+	
+	public List<EstadoCuentaCuota> listaEstadoCuentaCuotaByUprivada(int id);
 
 }

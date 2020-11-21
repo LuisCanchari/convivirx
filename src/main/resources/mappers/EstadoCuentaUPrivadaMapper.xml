@@ -19,20 +19,21 @@
     ui.des_direccion,ui.ubigeo,ui.latitud_map, ui.longitud_map,
     up.id_uprivada, up.id_tipo_unidad, up.numeracion, up.zona,
     p.id_persona, p.tipo_documento, p.num_documento, p.nombre, p.primer_apellido,
-    p.segundo_apellido, p.fecha_nacimiento,
+    p.segundo_apellido, 
+    p.fecha_nacimiento,
     tu.id,tu.descripcion,
 
-    IFNULL((SELECT sum(d.monto) total_monto
+    IFNULL((SELECT sum(d.monto) total
     FROM cuota c
     INNER JOIN detalle d
     ON c.id_cuota = d.id_cuota
     WHERE c.id_uprivada = up.id_uprivada ),0) total_cargo,
 
-    IFNULL((SELECT sum(a.monto_abono) total_abonado
+    IFNULL((SELECT sum(a.monto_abono) total
     FROM cuota c
     INNER JOIN abono a
     ON c.id_cuota = a.id_cuota
-    WHERE c.id_uprivada = up.id_uprivada ),0) total_cargo
+    WHERE c.id_uprivada = up.id_uprivada ),0) total_abono
 
     FROM unidadprivada up
     INNER JOIN unidadinmobiliaria ui

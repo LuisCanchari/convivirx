@@ -24,7 +24,5 @@ public class Concepto {
 	public void setNombreLargo(String nombreLargo) {
 		this.nombreLargo = nombreLargo;
 	}
-	
-	
 
 }

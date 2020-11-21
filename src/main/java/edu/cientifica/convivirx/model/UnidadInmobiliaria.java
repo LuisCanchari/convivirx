@@ -1,7 +1,5 @@
 package edu.cientifica.convivirx.model;
 
-import java.util.List;
-
 public class UnidadInmobiliaria {
 	private int id;
 	private String nombreCorto;

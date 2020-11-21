@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import edu.cientifica.convivirx.model.UnidadPrivada;
 import edu.cientifica.convivirx.rest.model.EstadoCuenta;
 import edu.cientifica.convivirx.rest.model.EstadoCuentaRest;
 

@@ -1,7 +1,6 @@
 package edu.cientifica.convivirx.rest.model;
 
-import java.sql.Date;
-import java.util.List;
+
 
 public class EstadoCuentaMaster {
 	private int id;

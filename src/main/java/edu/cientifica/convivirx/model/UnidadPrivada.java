@@ -1,7 +1,5 @@
 package edu.cientifica.convivirx.model;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -110,12 +108,6 @@ public class UnidadPrivada {
 		return "UnidadPrivada [id=" + id + ", tipoUnidad=" + tipoUnidad + ", numeracion=" + numeracion + ", zona="
 				+ zona + ", unidadInmobiliaria=" + unidadInmobiliaria + ", propietario=" + propietario + "]";
 	}
-	
-	
-	
-	
-
-
 	
 
 }

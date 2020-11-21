@@ -39,5 +39,38 @@
     ON pup.id_persona = p.id_persona
     AND pup.id_tipo_relacion = 1;
 	</select>
+	
+	<select id="selectEstadoCuentaCuotaByUprivada" resultMap="estadoCuentaCuotaResultMap" 
+	parameterType="_int">
+	    SELECT
+    c.id_cuota id_estado_cuenta,
+    ui.id_uinmobiliaria, ui.nombre_corto, ui.nombre_largo, ui.des_direccion,
+    up.id_uprivada, up.id_tipo_unidad, up.numeracion, up.zona,
+    p.id_persona, p.tipo_documento, p.num_documento, p.nombre, p.primer_apellido,
+    p.segundo_apellido, p.fecha_nacimiento,
+    c.id_cuota, c.num_cuota, c.titulo, c.anio, c.mes, c.fecha_emision, c.fecha_vencimiento, 
+
+    IFNULL((SELECT sum(d.monto) total_monto
+    FROM detalle d
+    WHERE d.id_cuota=c.id_cuota),0) total_cargo,
+
+    IFNULL((SELECT sum(a.monto_abono) total_abonado
+    FROM abono a
+    WHERE a.id_cuota = c.id_cuota
+    AND a.validado = 1),0) total_abono
+
+    FROM cuota c
+    INNER JOIN unidadprivada up
+    ON up.id_uprivada = c.id_uprivada
+    INNER JOIN unidadinmobiliaria ui
+    ON up.id_uinmobiliaria = ui.id_uinmobiliaria
+    INNER JOIN persona_up pup
+    ON up.id_uprivada = pup.id_uprivada
+    INNER JOIN persona p
+    ON pup.id_persona = p.id_persona
+    AND pup.id_tipo_relacion = 1
+    WHERE up.id_uprivada = #{id}
+	
+	</select>
 
 </mapper>

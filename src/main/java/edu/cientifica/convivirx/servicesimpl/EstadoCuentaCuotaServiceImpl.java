@@ -19,12 +19,11 @@ public class EstadoCuentaCuotaServiceImpl implements EstadoCuentaCuotaService{
 	public List<EstadoCuentaCuota> listaEstadoCuentaCuotaAll() {
 		return estadoCuentaCuotaMapper.selectEstadoCuentaCuotaAll();
 	}
-	
 
-	
-	
-
-	
+	@Override
+	public List<EstadoCuentaCuota> listaEstadoCuentaCuotaByUprivada(int id) {
+		return estadoCuentaCuotaMapper.selectEstadoCuentaCuotaByUprivada(id);
+	}
 	
 
 }
