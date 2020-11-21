@@ -66,7 +66,7 @@ public class EstadoCuentaRestController {
 		// data.setListaEstadoCuentaUprivada(estadoCuentaUPrivadaService.listaEstadoCuentaUPrivadaAll());
 
 		if (data.getData().isEmpty()) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		} else {
 			return new ResponseEntity<>(data, HttpStatus.OK);
 		}
