@@ -12,6 +12,4 @@ public class ListaEstadoCuentaCuota {
 	public void setData(List<EstadoCuentaCuota> data) {
 		this.data = data;
 	}
-	
-
 }
