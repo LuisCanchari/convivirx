@@ -22,6 +22,125 @@
 
 	<select id="selectCuota" resultMap="cuotaResultMap">
 		SELECT
+		ui.id_uinmobiliaria,
+		ui.nombre_corto, ui.nombre_largo, ui.des_direccion,
+		up.id_uprivada,
+		up.id_tipo_unidad, up.numeracion, up.zona,
+		p.id_persona,
+		p.tipo_documento, p.num_documento, p.nombre, p.primer_apellido,
+		p.segundo_apellido, p.fecha_nacimiento,
+		c.id_cuota, c.num_cuota,
+		c.titulo, c.anio, c.mes, c.fecha_emision,
+		c.fecha_vencimiento,
+		sum(d.monto) monto_total
+		FROM persona as p
+		INNER JOIN persona_up pup
+		ON
+		p.id_persona = pup.id_persona
+		INNER JOIN unidadprivada up
+		ON
+		pup.id_uprivada = up.id_uprivada
+		INNER JOIN unidadinmobiliaria ui
+		ON
+		up.id_uinmobiliaria = ui.id_uinmobiliaria
+		INNER JOIN cuota c
+		ON
+		up.id_uprivada = c.id_uprivada
+		INNER JOIN detalle d
+		ON c.id_cuota =
+		d.id_cuota
+		WHERE pup.id_tipo_relacion = 1
+		GROUP BY
+		ui.id_uinmobiliaria,
+		ui.nombre_corto, ui.nombre_largo, ui.des_direccion,
+		up.id_uprivada,
+		up.id_tipo_unidad, up.numeracion, up.zona,
+		p.id_persona,
+		p.tipo_documento, p.num_documento, p.nombre, p.primer_apellido,
+		p.segundo_apellido, p.fecha_nacimiento,
+		c.id_cuota, c.num_cuota,
+		c.titulo, c.anio, c.mes, c.fecha_emision,
+		c.fecha_vencimiento
+	</select>
+	
+	<select id="selectCuotaById" resultMap="cuotaResultMap" parameterType="_int">
+	SELECT
+    ui.id_uinmobiliaria, ui.nombre_corto, ui.nombre_largo, ui.des_direccion,
+    up.id_uprivada, up.id_tipo_unidad, up.numeracion, up.zona,
+    p.id_persona, p.tipo_documento, p.num_documento, p.nombre, p.primer_apellido,
+    p.segundo_apellido, p.fecha_nacimiento,
+    c.id_cuota, c.num_cuota, c.titulo, c.anio, c.mes, c.fecha_emision,
+    c.fecha_vencimiento,
+    IFNULL(sum(d.monto),0) monto_total
+    FROM persona as p
+    INNER JOIN persona_up pup
+    ON p.id_persona = pup.id_persona
+    INNER JOIN unidadprivada up
+    ON pup.id_uprivada = up.id_uprivada
+    INNER JOIN unidadinmobiliaria ui
+    ON up.id_uinmobiliaria = ui.id_uinmobiliaria
+    INNER JOIN cuota c
+    ON up.id_uprivada = c.id_uprivada
+    LEFT JOIN detalle d
+    ON c.id_cuota = d.id_cuota
+    WHERE pup.id_tipo_relacion = 1
+    GROUP BY
+    ui.id_uinmobiliaria, ui.nombre_corto, ui.nombre_largo, ui.des_direccion,
+    up.id_uprivada, up.id_tipo_unidad, up.numeracion, up.zona,
+    p.id_persona, p.tipo_documento, p.num_documento, p.nombre, p.primer_apellido,
+    p.segundo_apellido, p.fecha_nacimiento,
+    c.id_cuota, c.num_cuota, c.titulo, c.anio, c.mes, c.fecha_emision,
+    c.fecha_vencimiento
+    HAVING
+    c.id_cuota= #{id};
+	
+	</select>
+
+	<select id="listaCuota" resultMap="cuotaResultMap">
+		SELECT
+		up.id_uprivada,
+		up.id_tipo_unidad,
+		up.numeracion,
+		up.id_tipo_unidad,
+		up.zona,
+		up.id_uinmobiliaria,
+		c.id_cuota,
+		c.num_cuota,
+		c.titulo,
+		c.anio,
+		c.mes,
+		c.fecha_emision,
+		c.fecha_vencimiento,
+		sum(d.monto) monto_total
+		FROM
+		cuota
+		c
+		INNER JOIN unidadprivada up
+		ON
+		c.id_uprivada = up.id_uprivada
+		INNER JOIN
+		detalle d
+		ON c.id_cuota =
+		d.id_cuota
+		GROUP BY
+		c.id_cuota,
+		c.num_cuota,
+		c.titulo,
+		c.anio,
+		c.mes,
+		c.fecha_emision,
+		c.fecha_vencimiento,
+		up.id_uprivada,
+		up.id_tipo_unidad,
+		up.numeracion,
+		up.id_tipo_unidad,
+		up.zona,
+		up.id_uinmobiliaria
+	</select>
+
+	<select id="selectCuotaForUprivada" resultMap="cuotaResultMap"
+		resultType="edu.cientifica.convivirx.model.Cuota">
+		SELECT
 		ui.id_uinmobiliaria, ui.nombre_corto, ui.nombre_largo, ui.des_direccion,
 		up.id_uprivada, up.id_tipo_unidad, up.numeracion, up.zona,
 		p.id_persona, p.tipo_documento, p.num_documento, p.nombre, p.primer_apellido,
@@ -48,78 +167,65 @@
 		p.segundo_apellido, p.fecha_nacimiento,
 		c.id_cuota, c.num_cuota, c.titulo, c.anio, c.mes, c.fecha_emision,
 		c.fecha_vencimiento
+		HAVING
+		up.id_uprivada = #{id}
 	</select>
 
-	<select id="listaCuota" resultMap="cuotaResultMap">
-		SELECT
-		up.id_uprivada,
-		up.id_tipo_unidad,
-		up.numeracion,
-		up.id_tipo_unidad,
-		up.zona,
-		up.id_uinmobiliaria,
-		c.id_cuota,
-		c.num_cuota,
-		c.titulo,
-		c.anio,
-		c.mes,
-		c.fecha_emision,
-		c.fecha_vencimiento,
-		sum(d.monto) monto_total
-		FROM
-		cuota c
-		INNER JOIN unidadprivada up
-		ON
-		c.id_uprivada = up.id_uprivada
-		INNER JOIN detalle d
-		ON c.id_cuota =
-		d.id_cuota
-		GROUP BY
-		c.id_cuota,
-		c.num_cuota,
-		c.titulo,
-		c.anio,
-		c.mes,
-		c.fecha_emision,
-		c.fecha_vencimiento,
-		up.id_uprivada,
-		up.id_tipo_unidad,
-		up.numeracion,
-		up.id_tipo_unidad,
-		up.zona,
-		up.id_uinmobiliaria
+	<select id="generaId" resultType="_int">
+		SELECT IFNull(max(id_cuota),0)+1 id_cuota FROM cuota
 	</select>
 
-	<select id="selectCuotaForUprivada" resultMap="cuotaResultMap" resultType="edu.cientifica.convivirx.model.Cuota">
-    SELECT
+	<select id="selectGenerarCuotaDetalle"
+		resultMap="edu.cientifica.convivirx.mappers.CuotaDetalleMapper.cuotaDetalleResultMap"
+		parameterType="edu.cientifica.convivirx.model.Cuota">
+		SELECT @seq := FLOOR(@seq + 1) AS id_detalle, c.id_concepto, c.nombre_corto,
+		0.0 monto
+		FROM (SELECT @seq := 0) s, concepto c;
+	</select>
+
+	
+	<insert id="insertCuotaDetalle" parameterType="edu.cientifica.convivirx.model.Cuota">
+	   INSERT INTO detalle (id_cuota, id_detalle, id_concepto, monto)
+     SELECT #{id} as id_cuota, @seq := FLOOR(@seq + 1) AS id_detalle, c.id_concepto,  0.0 monto
+     FROM (SELECT @seq:=0 ) s, concepto c;
+	</insert>
+	
+	
+	<insert id="insertCuota"
+		parameterType="edu.cientifica.convivirx.model.Cuota">
+		INSERT INTO cuota (id_cuota, id_uprivada, num_cuota, titulo, anio,
+		mes,fecha_emision, fecha_vencimiento)
+		VALUES
+		(#{id},#{unidadPrivada.id},#{numCuota},#{titulo},#{anio},#{mes},#{fechaEmision},#{fechaVencimiento})
+	</insert>
+	
+	
+	
+	
+
+	<select id="selectCuotaByUnidadPrivadaId"
+		resultMap="cuotaResultMap" parameterType="_int">
+	  SELECT
     ui.id_uinmobiliaria, ui.nombre_corto, ui.nombre_largo, ui.des_direccion,
     up.id_uprivada, up.id_tipo_unidad, up.numeracion, up.zona,
     p.id_persona, p.tipo_documento, p.num_documento, p.nombre, p.primer_apellido,
     p.segundo_apellido, p.fecha_nacimiento,
     c.id_cuota, c.num_cuota, c.titulo, c.anio, c.mes, c.fecha_emision,
     c.fecha_vencimiento,
-    sum(d.monto) monto_total
+    tu.descripcion
     FROM persona as p
     INNER JOIN persona_up pup
     ON p.id_persona = pup.id_persona
     INNER JOIN unidadprivada up
     ON pup.id_uprivada = up.id_uprivada
+    AND pup.id_tipo_relacion = 1
     INNER JOIN unidadinmobiliaria ui
     ON up.id_uinmobiliaria = ui.id_uinmobiliaria
     INNER JOIN cuota c
     ON up.id_uprivada = c.id_uprivada
-    INNER JOIN detalle d
-    ON c.id_cuota = d.id_cuota
-    WHERE pup.id_tipo_relacion = 1
-    GROUP BY
-    ui.id_uinmobiliaria, ui.nombre_corto, ui.nombre_largo, ui.des_direccion,
-    up.id_uprivada, up.id_tipo_unidad, up.numeracion, up.zona,
-    p.id_persona, p.tipo_documento, p.num_documento, p.nombre, p.primer_apellido,
-    p.segundo_apellido, p.fecha_nacimiento,
-    c.id_cuota, c.num_cuota, c.titulo, c.anio, c.mes, c.fecha_emision,
-    c.fecha_vencimiento
-    HAVING
+    INNER JOIN tipounidad tu
+    ON up.id_tipo_unidad = tu.id
+    WHERE 
     up.id_uprivada = #{id}
 	</select>
-
 </mapper>

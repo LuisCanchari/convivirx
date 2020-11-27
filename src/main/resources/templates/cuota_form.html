@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+  th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css}"
+  integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<link rel="stylesheet" href="/css/convivir.css" th:href="@{/css/convivir.css}">
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script type="text/javascript" th:src="@{/js/convivir.js}"></script>
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Convivir</title>
+</head>
+
+<body>
+  <div id="contenedor">
+    <div id="header">
+      <div id="logo">
+        <img src="/img/logotitulo.png" th:src="@{/img/logotitulo.png}" alt="logotitulo">
+
+      </div>
+      <div id="cardlogin">
+        <div id="controles">
+          <div class="control">
+            <select name="uinmobiliaria" id="uinmobiliaria">
+              <option value="1">La Florida</option>
+              <option value="2">Los Titanes</option>
+              <option value="3">Camino Real</option>
+              <option value="4">Campanilla</option>
+            </select>
+          </div>
+          <div class="control">
+            <select name="uprivada" id="uprivada">
+              <option value="1">Dpto 101 A</option>
+              <option value="2">Dpto 102 A</option>
+            </select>
+          </div>
+          <div class="control">
+            <a href="/index" th:href="@{/index}"> <img src="/img/butt_cerrar_sesion.png"
+              th:src="@{/img/butt_cerrar_sesion.png}">
+
+            </a>
+          </div>
+
+        </div>
+        <div id="datos">
+          <p>Usuario: Juan Zavaleta Garcia</p>
+          <p>Propietario: Pedro Teran Gutierrez</p>
+          <p>Deuda: S/ 123.00</p>
+        </div>
+      </div>
+
+    </div>
+    <div id=foto>
+      <img src="/img/fotoheader.png" th:src="@{/img/fotoheader.png}" alt="fotoheader">
+
+    </div>
+
+    <div class="topnav">
+      <a href="#" th:href="@{/principal}">Inicio</a> <a href="#" th:href="@{/uprivada/lista}">Unidades Privadas</a> <a
+        href="#" th:href="@{/residente/lista}">Residentes</a> <a href="#" th:href="@{/estadocuenta/uprivada/lista}">Cuotas</a>
+      <a href="#" th:href="@{/comunicado/lista}">Comunicados</a> <a href="#" th:href="@{/visita/lista}">Visitas</a> <a
+        href="#" th:href="@{/gasto/lista}">Gastos</a>
+
+    </div>
+
+    <div class="principal">
+      <div class="col-9">
+        <form th:action="@{/cuota}" th:object="${cuota}" method="post">
+          <!-- Contenedor de controles -->
+          <div class="container">
+            <div class="form-group row">
+              <div class="col-4">
+                <label for="cuotaId">Cuota Id: </label>
+              </div>
+              <div class="col-8">
+                <input type="number" id="cuotaId" name="cuotaId" th:field="*{id}" class="form-control"
+                  readonly="readonly">
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <div class="col-4">
+                <label for="unidadPrivada">Numero Unidad: </label>
+              </div>
+              <div class="col-8">
+                <input type="hidden" id="unidadPrivadaId" name="unidadPrivadaId" th:field="*{unidadPrivada.id}">
+                <input type="number" id="unidadPrivada" name="unidadPrivada" th:field="*{unidadPrivada.numeracion}"
+                  class="form-control" readonly="readonly">
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <div class="col-4">
+                <label for="numCuota">Numero: </label>
+              </div>
+              <div class="col-8">
+                <input type="number" id="numCuota" name="numCuota" min="1" th:field="*{numCuota}" class="form-control">
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <div class="col-4">
+                <label for="titulo">Titulo: </label>
+              </div>
+              <div class="col-8">
+                <input type="text" id="titulo" name="titulo" th:field="*{titulo}" class="form-control">
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <div class="col-4">
+                <label for="anio">Año: </label>
+              </div>
+              <div class="col-8">
+                <input type="number" id="anio" name="anio" min="2000" max="2100" step="1" th:field="*{anio}"
+                  class="form-control">
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <div class="col-4">
+                <label for="mes">Mes: </label>
+              </div>
+              <div class="col-8">
+                <input type="number" id="mes" name="mes" min="1" max="12" th:field="*{mes}" class="form-control">
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <div class="col-4">
+                <label for="fechaEmision">Emision: </label>
+              </div>
+              <div class="col-8">
+                <input type="date" id="fechaEmision" name="fechaEmision" th:field="*{fechaEmision}" class="form-control">
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <div class="col-4">
+                <label for="fechaVencimiento">Vencimiento: </label>
+              </div>
+              <div class="col-8">
+                <input type="date" id="fechaVencimiento" name="fechaVencimiento" th:field="*{fechaVencimiento}"
+                  class="form-control">
+              </div>
+            </div>
+          </div>
+          <!-- Fin del Contenedor de Controles -->
+
+          <div class="form-group row">
+            <div class="col-6">
+              <input type="submit" class="btn btn-success btn-block" value="Grabar" id="btngrabar">
+            </div>
+
+            <!-- Boton del Modal -->
+            <div th:if="${cuota.listaCuotaDetalle}!=null" class="col-6">
+              <a href="#modalConceptos" class="btn btn-primary btn-block" data-toggle="modal">Detalle</a>
+            </div>
+          </div>
+
+          <!-- Modal -->
+          <div class="modal fade" id="modalConceptos" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel" th:text="${'Detalle de la cuota:'+cuota.id}">Detalle
+                    de Cuota</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <!-- Cuerpo del Detalle -->
+                 
+                <div class="modal-body">
+                <!--
+                  <table class="table table-light" id="tablaDetalle">
+                    <thead class="thead-light">
+                      <tr>
+                        <th>Detalle Id</th>
+                        <th>Concepto Id</th>
+                        <th>Concepto</th>
+                        <th>Monto</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr th:if="${cuota.listaCuotaDetalle}==null">
+                        <td>No existen resultados</td>
+                      </tr>
+                      <tr th:each="detalle: ${cuota.listaCuotaDetalle}">
+                        <td><input type="checkbox" name="idDetalle" id="idDetalle" th:value="${detalle.id}"></td>
+                        <td><span th:text="${detalle.concepto.id}" name = "idConcepto" id="idConcepto">id</span></td>
+                        <td><span th:text="${detalle.concepto.nombreCorto}">concepto</span></td>
+                        <td><input type="number" name="monto" id="monto" th:value="${detalle.monto}" step="0.01" min="0.00"></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                   -->
+
+                <table class="table table-light" id="tabla_cuota_detalle">
+                  <thead class="thead-light">
+                    <tr>
+                      <th>Numero</th>
+                      <th>Concepto</th>
+                      <th>Monto</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr th:if="${cuota.listaCuotaDetalle}==null">
+                      <td>No existen resultados</td>
+                    </tr>
+                    <tr th:each="detalle: ${cuota.listaCuotaDetalle}">
+                      <td><span th:text="${detalle.id}">Numero</span>
+                      <td><span th:text="${detalle.concepto.nombreCorto}"
+                        th:attr="data-concepto-id=${detalle.concepto.id}">Concepto</span></td>
+                      <td><input type="number" name="monto" id="monto" th:value="${detalle.monto}?: 0.0"
+                        step="0.01" min="0.00"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-success" id="guardarDetalle"
+                  th:onclick="'javascript:cuotaDetallesPut('+ ${cuota.id} +')'">Guardar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <!-- 
+                <button type="button" class="btn btn-success" id="guardarDetalle" onclick="enviarDatos()">Guardar</button>
+                 -->
+              </div>
+            </div>
+          </div>
+      </div>
+      <!-- Fin del Modal -->
+      </form>
+    </div>
+  </div>
+  <div id="footer">
+    <a class="card_foot" href="#"> <img src="/img/card_quienessomos.png" th:src="@{/img/card_quienessomos.png}"
+      alt="quienes somos">
+    </a> <a class="card_foot" href="#"> <img src="/img/card_nuestrosservicios.png"
+      th:src="@{/img/card_nuestrosservicios.png}" alt="nuestros servicios">
+    </a> <a class="card_foot" href="#"> <img src="/img/card_solicitademo.png" th:src="@{/img/card_solicitademo.png}"
+      alt="solicita una demo">
+    </a>
+  </div>
+  </div>
+</body>
+</html>

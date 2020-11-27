@@ -117,6 +117,4 @@
     ON pup.id_persona = p.id_persona
     WHERE pup.id_tipo_relacion = 1
   </select>
-
-
 </mapper>

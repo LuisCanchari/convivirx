@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="edu.cientifica.convivirx.mappers.CuotaDetalleMapper">
+	<resultMap id="cuotaDetalleResultMap"
+		type="edu.cientifica.convivirx.model.CuotaDetalle">
+		<id column="id_detalle" property="id" />
+		<result column="monto" property="monto" />
+		<association column="id_cuota" property="cuota"
+			javaType="edu.cientifica.convivirx.model.Cuota"
+			resultMap="edu.cientifica.convivirx.mappers.CuotaMapper.cuotaResultMap" />
+		<association column="id_concepto" property="concepto"
+			javaType="edu.cientifica.convivirx.model.Concepto"
+			resultMap="edu.cientifica.convivirx.mappers.ConceptoMapper.conceptoResultMap" />
+	</resultMap>
+
+	<insert id="insertBatchDetalle" useGeneratedKeys="false">
+		insert into detalle (id_cuota, id_detalle, id_concepto, monto) values
+		<foreach item="detalle" collection="listaDetalle"
+			separator=",">
+			(#{detalle.cuotaId}, #{detalle.id}, #{detalle.conceptoId}, #{detalle.monto})
+		</foreach>
+	</insert>
+
+	<!-- Tener habilitado &allowMultiQueries=true -->
+	<update id="updateBatchDetalle">
+		<foreach collection="listaDetalle" item="detallito"
+			index="index" separator=";">
+			UPDATE detalle
+			SET monto=#{detallito.monto}
+			WHERE id_cuota=#{detallito.cuotaId}
+			AND id_detalle=#{detallito.id}
+		</foreach>
+	</update>
+
+	<select id="selectListaCuotaDetalleById"
+		resultMap="cuotaDetalleResultMap" parameterType="_int">
+		SELECT d.id_detalle, c.id_cuota, d.id_concepto, d.monto, t.nombre_corto
+		FROM cuota c
+		INNER JOIN detalle d
+		ON c.id_cuota = d.id_cuota
+		INNER JOIN concepto t
+		ON d.id_concepto = t.id_concepto
+		WHERE c.id_cuota = #{id};
+
+	</select>
+
+	<select id="selectCuotaDetalleByCuota"
+		resultMap="cuotaDetalleResultMap" parameterType="_int">
+		SELECT d.id_detalle, c.id_cuota, d.id_concepto, d.monto, t.nombre_corto
+		FROM cuota c
+		INNER JOIN detalle d
+		ON c.id_cuota = d.id_cuota
+		INNER JOIN concepto t
+		ON d.id_concepto = t.id_concepto
+		WHERE c.id_cuota = #{id};
+	</select>
+</mapper>
+
+

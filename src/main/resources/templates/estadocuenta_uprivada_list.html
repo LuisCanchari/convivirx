@@ -8,6 +8,8 @@
 	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 <link rel="stylesheet" href="/css/convivir.css" th:href="@{/css/convivir.css}">
 <script type="text/javascript" th:src="@{/js/convivir.js}"></script>
+
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Convivir</title>
 </head>
@@ -72,66 +74,61 @@
 			<table class="table table-light">
 				<thead class="thead-light">
 					<tr>
-					
-						<th>Titulo</th>
-						<th>Año - Mes</th>
-            <th>Numero</th>
-            <th>Fecha Emision</th>
-            <th>Fecha Vencimiento</th>
-            <th>Accion</th>
+						<th>Tipo Unidad</th>
+						<th>Numero</th>
+            <th>Propietario</th>
+						<th>Total Cargo</th>
+            <th>Total Abono</th>
+            <th>Total Saldo</th>
+						<th>Accion</th>
 					</tr>
-          
 				</thead>
 
 				<tbody>
-					<tr th:if="${cuotas.empty}">
+					<tr th:if="${lista_estadocuenta.empty}">
 						<td>No existen resultados</td>
 					</tr>
-					<tr th:each="cuota: ${cuotas}">
-					
-            
-            <td>
-              <span th:text="${cuota.titulo}">Titulo</span>
-            </td>
-            
-            <td>
-              <span th:text="${cuota.anio}+' - '+${cuota.mes}">anio - mes</span>
-            </td>
-
+					<tr th:each="estadocuenta: ${lista_estadocuenta}">
 						<td>
-							<span th:text="${cuota.numCuota}">numero</span>
+							<span th:text="${estadocuenta.unidadPrivada.tipoUnidad.descripcion}? ${estadocuenta.unidadPrivada.tipoUnidad.descripcion}: ''">id</span>
 						</td>
 
 						<td>
-							<span th:text="${cuota.fechaEmision}">Fecha Emision</span>
+            <a th:href="@{'/cuota/uprivada/'+${estadocuenta.unidadPrivada.id}}">
+							<span th:text="${estadocuenta.unidadPrivada.numeracion}? ${estadocuenta.unidadPrivada.numeracion}: ''">Numero</span>
+             </a>
+						</td>
+
+						<td>
+							<span th:text="${estadocuenta.unidadPrivada.propietario.nombre}? ${estadocuenta.unidadPrivada.propietario.nombre +' '+estadocuenta.unidadPrivada.propietario.primerApellido}: ''">Propietario</span>
+						</td>
+
+						<td>
+							<span th:text="${#numbers.formatCurrency(estadocuenta.totalCargo)}">Monto Cargo</span>
 						</td>
             
             <td>
-              <span th:text="${cuota.fechaVencimiento}">Fecha Vencimiento</span>
+              <span th:text="${estadocuenta.totalAbono}">Monto Abono</span>
             </td>
+            
+            <td>
+              <span th:text="${estadocuenta.totalCargo - estadocuenta.totalAbono}">Monto Saldo</span>
+            </td>
+
 						
 						<td>
-            
-              <span> 
-               <a th:href="@{'/cuota/'+${cuota.id}+'/detalles/'}"  class="btn btn-primary">
-                  Insertar
-                </a>
-              </span>
-              <span> 
-               <a th:href="@{'/cuota/'+${cuota.id}+'/detalles/'}"  class="btn btn-primary">
-                  Editar
-                </a>
-              </span>
-              
-							
+							<span > 
+							 <a href="#" th:href="@{'/cuota/uprivada/'+${estadocuenta.unidadPrivada.id}+'/form'}" class="btn btn-success">
+									<i class="fa fa-pencil-square" aria-hidden="true"></i>Agregar Cuota
+								</a>
+							</span> 
 						</td>
 					</tr>
 				</tbody>
 			</table>
 
 		</div>
-    
-    <div id="footer">
+		<div id="footer">
 			<a class="card_foot" href="#">
 				<img src="/img/card_quienessomos.png" th:src="@{/img/card_quienessomos.png}" alt="quienes somos">
 			</a>

@@ -4,6 +4,7 @@ public class CuotaDetalle {
 	private int id;
 	private Cuota cuota;
 	private Concepto concepto;
+	private double monto;
 	
 	
 	public CuotaDetalle() {
@@ -11,6 +12,19 @@ public class CuotaDetalle {
 	
 	}
 	
+	
+	
+	public CuotaDetalle(int id, Cuota cuota, Concepto concepto) {
+		super();
+		this.id = id;
+		this.cuota = cuota;
+		this.concepto = concepto;
+	}
+	
+	
+
+
+
 	public int getId() {
 		return id;
 	}
@@ -28,6 +42,24 @@ public class CuotaDetalle {
 	}
 	public void setConcepto(Concepto concepto) {
 		this.concepto = concepto;
+	}
+
+	public double getMonto() {
+		return monto;
+	}
+
+	public void setMonto(double monto) {
+		this.monto = monto;
+	}
+
+
+
+	@Override
+	public String toString() {
+		return "CuotaDetalle [id=" + id + ", cuota=" + cuota + ", concepto=" + concepto + ", monto=" + monto + "]";
 	} 
+	
+	
+	
 	
 }

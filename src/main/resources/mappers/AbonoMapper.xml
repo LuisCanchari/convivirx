@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="edu.cientifica.convivirx.mappers.AbonoMapper">
 
-	<resultMap id="cuotaResultMap"
+	<resultMap id="abonoResultMap"
 		type="edu.cientifica.convivirx.model.Abono">
 
 		<id column="id_abono" property="id" />
@@ -17,7 +17,7 @@
 	</resultMap>
 
 
-	<select id="selectAbonoForUprivada" resultMap="cuotaResultMap" resultType="edu.cientifica.convivirx.model.Abono">
+	<select id="selectAbonoForUprivada" resultMap="abonoResultMap" resultType="edu.cientifica.convivirx.model.Abono">
 		SELECT
 		ui.id_uinmobiliaria, ui.nombre_corto, ui.nombre_largo, ui.des_direccion,
 		up.id_uprivada, up.id_tipo_unidad, up.numeracion, up.zona,
@@ -42,4 +42,19 @@
 		AND up.id_uprivada = #{id}
 		
 	</select>
+	<select id="generarAbonoId" resultType="_int">
+	   SELECT IFNULL(MAX(id_abono),0)+1 codigo from abono
+	</select>
+	<insert id="insertAbono" parameterType="edu.cientifica.convivirx.model.Abono">
+	   INSERT INTO abono (id_abono, id_cuota, fecha_abono, monto_abono, validado, tipo_abono, foto_comprobante)
+     VALUES (#{id},#{cuota.id}, #{fechaAbono}, #{montoAbono},1,1,null)
+	</insert>
+	
+	<select id="selectAbonoById" resultMap="abonoResultMap" parameterType="_int">
+	   SELECT id_abono, id_cuota, fecha_abono, monto_abono, validado, tipo_abono, foto_comprobante
+     FROM abono
+     WHERE id_abono = #{id};
+	</select>
+	
+	
 </mapper> 

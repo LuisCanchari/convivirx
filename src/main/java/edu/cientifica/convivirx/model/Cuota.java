@@ -1,9 +1,7 @@
 package edu.cientifica.convivirx.model;
 
 import java.sql.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class Cuota {
 	private int id;
@@ -15,6 +13,7 @@ public class Cuota {
 	private Date fechaVencimiento;
 	private UnidadPrivada unidadPrivada;
 	private double montoTotal;
+	private List<CuotaDetalle> listaCuotaDetalle;
 
 
 	public Cuota() {
@@ -33,7 +32,6 @@ public class Cuota {
 		this.fechaEmision = fechaEmision;
 		this.fechaVencimiento = fechaVencimiento;
 		this.unidadPrivada = unidadPrivada;
-		this.montoTotal = montoTotal;
 	}
 
 	public int getId() {
@@ -107,7 +105,25 @@ public class Cuota {
 	public void setMontoTotal(double montoTotal) {
 		this.montoTotal = montoTotal;
 	}
+
+	public List<CuotaDetalle> getListaCuotaDetalle() {
+		return listaCuotaDetalle;
+	}
+
+	public void setListaCuotaDetalle(List<CuotaDetalle> listaCuotaDetalle) {
+		this.listaCuotaDetalle = listaCuotaDetalle;
+	}
+
+	@Override
+	public String toString() {
+		return "Cuota [id=" + id + ", numCuota=" + numCuota + ", titulo=" + titulo + ", anio=" + anio + ", mes=" + mes
+				+ ", fechaEmision=" + fechaEmision + ", fechaVencimiento=" + fechaVencimiento + ", unidadPrivada="
+				+ unidadPrivada + ", montoTotal=" + montoTotal + ", listaCuotaDetalle=" + listaCuotaDetalle + "]";
+	}
 	
 	
+	
+	
+
 
 }
