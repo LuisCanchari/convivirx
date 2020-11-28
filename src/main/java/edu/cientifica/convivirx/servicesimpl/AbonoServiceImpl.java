@@ -31,6 +31,10 @@ public class AbonoServiceImpl implements AbonoService{
 		java.sql.Date date = new java.sql.Date(currentDate.getTime());
 		abono.setFechaAbono(date);
 		
+		abono.setTipoAbono(1);
+		abono.setValidado(1);
+		
+		
 		LOG.info(abono.toString());
 		
 		result = abonoMapper.insertAbono(abono);

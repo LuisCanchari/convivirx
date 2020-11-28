@@ -5,6 +5,7 @@ import java.util.List;
 import edu.cientifica.convivirx.model.CuotaDetalle;
 
 public class ListaCuotaDetalle {
+	
 	private List<CuotaDetalle> data;
 
 	public List<CuotaDetalle> getData() {

@@ -47,7 +47,7 @@
 	</select>
 	<insert id="insertAbono" parameterType="edu.cientifica.convivirx.model.Abono">
 	   INSERT INTO abono (id_abono, id_cuota, fecha_abono, monto_abono, validado, tipo_abono, foto_comprobante)
-     VALUES (#{id},#{cuota.id}, #{fechaAbono}, #{montoAbono},1,1,null)
+     VALUES (#{id},#{cuota.id}, #{fechaAbono}, #{montoAbono},#{validado},#{tipoAbono},null)
 	</insert>
 	
 	<select id="selectAbonoById" resultMap="abonoResultMap" parameterType="_int">

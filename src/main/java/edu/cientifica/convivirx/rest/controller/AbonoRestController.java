@@ -25,10 +25,11 @@ public class AbonoRestController {
 	@Autowired
 	AbonoService abonoService;
 	
-	@PostMapping
+	@PostMapping()
 	public ResponseEntity<Abono> registrarAbono(@RequestBody Abono abono) {
 		Abono nuevoResgistro;
 		LOG.info("Abono recibido"+abono.toString());
+		
 		nuevoResgistro =  abonoService.registrarAbono(abono);
 		
 	    HttpHeaders httpHeaders = new HttpHeaders();
@@ -40,7 +41,7 @@ public class AbonoRestController {
 	                    .buildAndExpand(nuevoResgistro.getId())
 	                    .toUri());
 	    
-	    return new ResponseEntity<>(httpHeaders, HttpStatus.CREATED);
+	    return new ResponseEntity<>(nuevoResgistro, HttpStatus.CREATED);
 	}
 	
 	@GetMapping("/{id}")

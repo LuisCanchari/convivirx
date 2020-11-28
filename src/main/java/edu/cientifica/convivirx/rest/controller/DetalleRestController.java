@@ -29,6 +29,7 @@ public class DetalleRestController {
 		
 		
 		ListaCuotaDetalle data = new ListaCuotaDetalle();
+		
 		data.setData(detalleService.listaCuotaDetalleByCuota(id));
 		
 		if (data.getData().isEmpty()) {
