@@ -159,7 +159,7 @@
                   th:each="persona: ${listaPersona}"
                   th:value="${persona.id}"
                   th:text="${persona.nombre} + ' ' +${persona.primerApellido}"
-                  th:selected="(${persona.id}==*{propietario.id})"></option>
+                  th:selected="(${persona.id}==*{propietario.id}?:'0')"></option>
               </select>
             </div>
           </div>

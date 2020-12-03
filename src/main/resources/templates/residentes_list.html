@@ -70,20 +70,19 @@
     </div>
     <div class="principal">
 
-      <a href="#" th:href="@{/uprivada/form}" class="btn btn-success"> <i class="fa fa-plus" aria-hidden="true"></i>
-        Nueva Unidad Privada
+      <a href="#" th:href="@{/residente/form}" class="btn btn-success"> <i class="fa fa-plus" aria-hidden="true"></i>
+        Registrar Residente
       </a>
 
       <table class="table table-light">
         <thead class="thead-light">
           <tr>
             <th>Id</th>
-            <th>U Inmobiliaria</th>
-            <th>Tipo Unidad</th>
-            <th>Numeracion</th>
-            <th>Zona</th>
-            <th>Propietario</th>
-            <th>Edit</th>
+            <th>Documento</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Unidad</th>
+            <th>Accion</th>
 
           </tr>
         </thead>
@@ -92,60 +91,47 @@
           <tr th:if="${pageInfo.list.empty}">
             <td>No existen resultados</td>
           </tr>
-          <tr th:each="unidad: ${pageInfo.list}">
-            <td><span th:text="${unidad.id}">1</span></td>
-
-            <td><span th:text="${unidad.unidadInmobiliaria}?${unidad.unidadInmobiliaria.nombreCorto}:'Sin datos'">Condominio
-                X</span></td>
-
-            <td><span th:text="${unidad.tipoUnidad}?${unidad.tipoUnidad.descripcion}:'Sin Datos'">Vivienda</span></td>
-
-            <td><span th:text="${unidad.numeracion}">101 - A</span></td>
-
-            <td><span th:text="${unidad.zona}">101 - A</span></td>
-
-                
-            <td><span th:text="${unidad.propietario}?${unidad.propietario.nombre}+' '+${unidad.propietario.primerApellido}:'Sin propietario'">101
-                - A</span></td>
-           
-            <td><span> <a href="#" th:href="@{'/uprivada/edit/'+${unidad.id}}"> <i
+          <tr th:each="residente : ${pageInfo.list}">
+            <td><span th:text="${residente.id}">1</span></td>
+            <td><span th:text="${residente.tipoDocumento}+' - '+${residente.numDocumento}">1</span></td>
+            <td><span th:text="${residente.nombre}">1</span></td>
+            <td><span th:text="${residente.primerApellido}+' - '+${residente.segundoApellido}">1</span></td>
+            <td><span th:text="${residente.unidadPrivada.numeracion}">1</span></td>
+            <td><span> <a href="#" th:href="@{'/residente/edit/'+${residente.id}}"> <i
                   class="fa fa-pencil-square" aria-hidden="true"></i> Edit
               </a>
             </span></td>
           </tr>
         </tbody>
       </table>
-
-      <form th:action="@{/uprivada/lista}" method="POST" id="Search_form" class="form-horizontal">
-        <input type="hidden" name="pageNum" id="idPageNum" th:value="${pageInfo.pageNum}" />
+      
+       <form th:action="@{/residente/lista}" method="POST" id="Search_form" class="form-horizontal">
+              <input type="hidden" name="pageNum" id="idPageNum" th:value="${pageInfo.pageNum}" />
       </form>
-
+      
+      
+      
+      
       <nav aria-label="Page navigation">
         <ul class="pagination pull-right">
 
-          <li th:class="${pageInfo.isFirstPage} ? 'disabled'">
-            <a class="page-link" href="javascript:void(0)"
+          <li th:class="${pageInfo.isFirstPage} ? 'disabled'"><a class="page-link" href="javascript:void(0)"
             th:onclick="${!pageInfo.isFirstPage} ? 'doSearch(1);'">Inicio</a></li>
 
-          <li th:class=" ${pageInfo.isFirstPage} ? 'disabled'">
-            <a class="page-link" href="javascript:void(0)"
+          <li th:class=" ${pageInfo.isFirstPage} ? 'disabled'"><a class="page-link" href="javascript:void(0)"
             th:onclick="${!pageInfo.isFirstPage} ? 'doSearch(' + ${pageInfo.prePage} + ');'">Anterior</a></li>
 
-          <li th:each="page : ${pageInfo.navigatepageNums}" th:class="${page == pageInfo.pageNum} ? 'active'">
-           <a
+          <li th:each="page : ${pageInfo.navigatepageNums}" th:class="${page == pageInfo.pageNum} ? 'active'"><a
             class="page-link" href="javascript:void(0)" th:text="${page}" th:onclick="'doSearch(' + ${page} + ');'"></a>
           </li>
 
-          <li th:class=" ${pageInfo.isLastPage} ? 'disabled'">
-            <a class="page-link" href="javascript:void(0)"
+          <li th:class=" ${pageInfo.isLastPage} ? 'disabled'"><a class="page-link" href="javascript:void(0)"
             th:onclick="${!pageInfo.isLastPage} ? 'doSearch(' + ${pageInfo.nextPage} + ');'">Siguiente</a></li>
 
-          <li th:class=" ${pageInfo.isLastPage} ? 'disabled'">
-            <a class="page-link" href="javascript:void(0)"
+          <li th:class=" ${pageInfo.isLastPage} ? 'disabled'"><a class="page-link" href="javascript:void(0)"
             th:onclick="${!pageInfo.isLastPage} ? 'doSearch(' + ${pageInfo.pages} + ');'">Último</a></li>
 
-          <li>
-            <input type="number" class="input change-page-num" min="1" step="1" style="width: 50px; margin: 0px;"
+          <li><input type="number" class="input change-page-num" min="1" step="1" style="width: 50px; margin: 0px;"
             th:value="${pageInfo.pageNum}" id="idTextIr" /></li>
           <li>
             <button class="btn btn-primary " type="button" th:onclick="'doSearch($(\'#idTextIr\').val())'">Ir</button>

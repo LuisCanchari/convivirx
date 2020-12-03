@@ -8,9 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.github.pagehelper.PageHelper;
+
 import edu.cientifica.convivirx.mappers.UnidadPrivadaMapper;
 import edu.cientifica.convivirx.model.UnidadPrivada;
 import edu.cientifica.convivirx.services.UnidadPrivadaService;
+
+
+
 
 @Service
 public class UnidadPrivadaServiceImpl implements UnidadPrivadaService {
@@ -25,7 +30,9 @@ public class UnidadPrivadaServiceImpl implements UnidadPrivadaService {
 		int result;
 		LOG.info("UnidadPrivadaServiceImpl "+unidadPrivada.toString());
 		result = unidadPrivadaMapper.insertUnidadPrivada(unidadPrivada);
-		unidadPrivadaMapper.insertUnidadPrivadaPropietario(unidadPrivada);
+		if(unidadPrivada.getPropietario().getId()!=0) {
+			unidadPrivadaMapper.insertUnidadPrivadaPropietario(unidadPrivada);
+		}
 		
 		return result;
 	}
@@ -34,7 +41,17 @@ public class UnidadPrivadaServiceImpl implements UnidadPrivadaService {
 	public List<UnidadPrivada> listarUnidadPrivada() {
 
 		//LOG.info("Unidades: " + unidadPrivadaMapper.findAllUnidadPrivada());
+		
+		
 		return unidadPrivadaMapper.findAllUnidadPrivada();
+	}
+	
+	@Override
+	public List<UnidadPrivada> listarUnidadPrivada(Integer pageNum, Integer pageSize) {
+		PageHelper.startPage(pageNum, pageSize);
+		List<UnidadPrivada> listaUnidadPrivada;
+		listaUnidadPrivada =  unidadPrivadaMapper.findAllUnidadPrivada();
+		return listaUnidadPrivada;
 	}
 
 	@Transactional
@@ -46,7 +63,8 @@ public class UnidadPrivadaServiceImpl implements UnidadPrivadaService {
 		
 		return result;
 	}
-
+	
+	
 	@Override
 	public int eliminarUnidadPrivada(int id) {
 		int result;
@@ -97,7 +115,5 @@ public class UnidadPrivadaServiceImpl implements UnidadPrivadaService {
 		return unidadPrivadaMapper.findUnidadPrivadaByCondomio(condominioId);
 		
 	}
-	
-	
 
 }

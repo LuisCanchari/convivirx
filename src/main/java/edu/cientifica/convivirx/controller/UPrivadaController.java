@@ -17,7 +17,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.github.pagehelper.PageInfo;
 
 import edu.cientifica.convivirx.model.Persona;
 import edu.cientifica.convivirx.model.UnidadInmobiliaria;
@@ -30,105 +33,111 @@ import edu.cientifica.convivirx.services.UnidadPrivadaService;
 @Controller
 @RequestMapping("/uprivada")
 public class UPrivadaController {
-	protected final Log LOG =  LogFactory.getLog(this.getClass());
+	protected final Log LOG = LogFactory.getLog(this.getClass());
 
 	@Autowired
 	private UnidadPrivadaService unidadPrivadaService;
-	
+
 	@Autowired
 	private UnidadInmobiliariaService unidadInmobiliariaService;
-	
+
 	@Autowired
 	private PersonaService personaService;
-	
+
 	@Autowired
 	private TipoUnidadService tipoUnidadService;
-	
 
-	@GetMapping("/lista")
-	public String listaUnidad(Model model) {
+	@RequestMapping("/lista")
+	public String listaUnidad(Model model, 
+			@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+			@RequestParam(value = "pageSize", defaultValue = "3") Integer pageSize)
+
+	{
 		List<UnidadPrivada> listUnidadPrivada;
-		listUnidadPrivada = unidadPrivadaService.listarUnidadPrivada();
-		model.addAttribute("unidades", listUnidadPrivada);
+		listUnidadPrivada = unidadPrivadaService.listarUnidadPrivada(pageNum, pageSize);
+		
+		PageInfo<UnidadPrivada> pageInfo = new PageInfo<UnidadPrivada>(listUnidadPrivada);
+		
+		
+		model.addAttribute("pageInfo", pageInfo);
 		return "uprivada_list";
 	}
 
 	@GetMapping("/form")
-	public String formularioUnidad(Model model)  {
+	public String formularioUnidad(Model model) {
 		List<UnidadInmobiliaria> listaUnidadInmobiliara = unidadInmobiliariaService.listarUnidadInmobiliaria();
-		List<Persona> listaPersona =  personaService.listaPersona();
-		
+		List<Persona> listaPersona = personaService.listaPersona();
+
 		UnidadPrivada unidadPrivada = new UnidadPrivada();
 		unidadPrivada.setId(unidadPrivadaService.generarCodigoUP());
-		
-		model.addAttribute("listaTipoUnidad",tipoUnidadService.listaTipoUnidad());
+
+		model.addAttribute("listaTipoUnidad", tipoUnidadService.listaTipoUnidad());
 		model.addAttribute("Uprivada", unidadPrivada);
-		model.addAttribute("listaUnidadInmobiliaria",listaUnidadInmobiliara);
-		model.addAttribute("listaPersona",listaPersona);
+		model.addAttribute("listaUnidadInmobiliaria", listaUnidadInmobiliara);
+		model.addAttribute("listaPersona", listaPersona);
 
 		return "uprivada_form";
 	}
-	
+
 	@GetMapping("/edit/{id}")
-	public String frmEditarUnidad(Model model, @PathVariable(name="id") int id)  {
+	public String frmEditarUnidad(Model model, @PathVariable(name = "id") int id) {
 		List<UnidadInmobiliaria> listaUnidadInmobiliara = unidadInmobiliariaService.listarUnidadInmobiliaria();
-		List<Persona> listaPersona =  personaService.listaPersona();
-		
+		List<Persona> listaPersona = personaService.listaPersona();
+
 		UnidadPrivada unidadPrivada = unidadPrivadaService.unidadPrivadaById(id);
-		
-		model.addAttribute("listaTipoUnidad",tipoUnidadService.listaTipoUnidad());
+
+		model.addAttribute("listaTipoUnidad", tipoUnidadService.listaTipoUnidad());
 		model.addAttribute("Uprivada", unidadPrivada);
-		model.addAttribute("listaUnidadInmobiliaria",listaUnidadInmobiliara);
-		model.addAttribute("listaPersona",listaPersona);
+		model.addAttribute("listaUnidadInmobiliaria", listaUnidadInmobiliara);
+		model.addAttribute("listaPersona", listaPersona);
 
 		return "uprivada_edit";
 	}
 
 	@PostMapping("/registrar")
-	public String registrarUnidad( @Valid @ModelAttribute("Uprivada") UnidadPrivada unidadPrivada, 
-			BindingResult errors, Model model, RedirectAttributes atribute) {
-		
+	public String registrarUnidad(@Valid @ModelAttribute("Uprivada") UnidadPrivada unidadPrivada, BindingResult errors,
+			Model model, RedirectAttributes atribute) {
+
 		List<UnidadInmobiliaria> listaUnidadInmobiliara = unidadInmobiliariaService.listarUnidadInmobiliaria();
-		
+
 		if (errors.hasErrors()) {
-			LOG.info("numero de errores: "+errors.getErrorCount());
+			LOG.info("numero de errores: " + errors.getErrorCount());
 			for (ObjectError oe : errors.getAllErrors()) {
-				LOG.info("error "+oe.getCode()+" "+oe.getObjectName()+oe.getDefaultMessage());
+				LOG.info("error " + oe.getCode() + " " + oe.getObjectName() + oe.getDefaultMessage());
 			}
-			model.addAttribute("listaUnidadInmobiliaria",listaUnidadInmobiliara);
+			model.addAttribute("listaUnidadInmobiliaria", listaUnidadInmobiliara);
 			return ("uprivada_form");
 		}
-		
 
 		try {
-			int result =unidadPrivadaService.registrarUnidadPrivada(unidadPrivada);
+			int result = unidadPrivadaService.registrarUnidadPrivada(unidadPrivada);
 		} catch (Exception e) {
-			LOG.error("UPrivadaController: "+ e.getMessage()+" "+e.getCause());
+			LOG.error("UPrivadaController: " + e.getMessage() + " " + e.getCause());
 		}
 
 		return "redirect:/uprivada/lista";
 	}
-	
+
 	@PostMapping("/actualizar")
-	public String actualizarUnidad( @Valid @ModelAttribute("Uprivada") UnidadPrivada unidadPrivada, 
-			BindingResult errors, Model model, RedirectAttributes atribute) {
-		
+	public String actualizarUnidad(@Valid @ModelAttribute("Uprivada") UnidadPrivada unidadPrivada, BindingResult errors,
+			Model model, RedirectAttributes atribute) {
+
 		List<UnidadInmobiliaria> listaUnidadInmobiliara = unidadInmobiliariaService.listarUnidadInmobiliaria();
-		
+
 		if (errors.hasErrors()) {
-			
+
 			for (ObjectError oe : errors.getAllErrors()) {
-				LOG.info("error"+oe.getCode()+" "+oe.getObjectName()+oe.getDefaultMessage());
+				LOG.info("error" + oe.getCode() + " " + oe.getObjectName() + oe.getDefaultMessage());
 			}
-			model.addAttribute("listaUnidadInmobiliaria",listaUnidadInmobiliara);
+			model.addAttribute("listaUnidadInmobiliaria", listaUnidadInmobiliara);
 			return ("uprivada_form");
 		}
-		
-		LOG.info("UNIDAD PRIVADA"+unidadPrivada.toString());
-		
+
+		LOG.info("UNIDAD PRIVADA" + unidadPrivada.toString());
+
 		try {
-			
-			int result =unidadPrivadaService.actualizarUnidadPrivada(unidadPrivada);
+
+			int result = unidadPrivadaService.actualizarUnidadPrivada(unidadPrivada);
 		} catch (Exception e) {
 			LOG.info(e.getMessage());
 		}

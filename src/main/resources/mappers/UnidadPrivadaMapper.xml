@@ -27,10 +27,10 @@
   FROM unidadprivada up
   INNER JOIN unidadinmobiliaria ui 
     ON up.id_uinmobiliaria=ui.id_uinmobiliaria
-  INNER JOIN persona_up pup
+  LEFT JOIN persona_up pup
     ON up.id_uprivada = pup.id_uprivada
     AND pup.id_tipo_relacion = '1' 
-  INNER JOIN persona p
+  LEFT JOIN persona p
     ON pup.id_persona = p.id_persona
   INNER JOIN tipounidad tu
     ON up.id_tipo_unidad = tu.id
@@ -45,10 +45,10 @@
   FROM unidadprivada up
   INNER JOIN unidadinmobiliaria ui 
     ON up.id_uinmobiliaria=ui.id_uinmobiliaria
-  INNER JOIN persona_up pup
+  LEFT JOIN persona_up pup
     ON up.id_uprivada = pup.id_uprivada
     AND pup.id_tipo_relacion = '1' 
-  INNER JOIN persona p
+  LEFT JOIN persona p
     ON pup.id_persona = p.id_persona
   INNER JOIN tipounidad tu
     ON up.id_tipo_unidad = tu.id

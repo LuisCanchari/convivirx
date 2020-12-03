@@ -110,3 +110,15 @@ function Detalle(id, cuotaId, conceptoId, monto){
 	this.conceptoId=conceptoId
 	this.monto=monto
 }
+
+function doSearch(pageNum) {
+//Jquery 
+//$ codigo Jquery : Libreria de Java Script.
+//# idetifica una etiqueta dle html	
+	
+	//document.getElementById("idPageNum").val(pageNum);
+
+	$("#idPageNum").val(pageNum);
+	$("#Search_form").submit();
+
+}

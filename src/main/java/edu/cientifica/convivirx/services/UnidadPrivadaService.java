@@ -12,6 +12,9 @@ import edu.cientifica.convivirx.model.UnidadPrivada;
 public interface UnidadPrivadaService {
 	public int registrarUnidadPrivada(UnidadPrivada unidadPrivada);
 	public List<UnidadPrivada> listarUnidadPrivada();
+	public List<UnidadPrivada> listarUnidadPrivada(Integer pageNum, Integer pageSize);
+
+	
 	public int actualizarUnidadPrivada(UnidadPrivada unidadPrivada);
 	public int eliminarUnidadPrivada(int id);
 	public UnidadPrivada unidadPrivadaById(int id);

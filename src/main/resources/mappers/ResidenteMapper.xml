@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="edu.cientifica.convivirx.mappers.ResidenteMapper">
+	<resultMap id="residenteResultMap"
+		extends="edu.cientifica.convivirx.mappers.PersonaMapper.personaResultMap"
+		type="edu.cientifica.convivirx.model.Residente">
+		<association column="unidad_privada"
+			property="unidadPrivada"
+			javaType="edu.cientifica.convivirx.model.UnidadPrivada"
+			resultMap="edu.cientifica.convivirx.mappers.UnidadPrivadaMapper.unidadPrivadaResultMap" />
+	</resultMap>
+	<select id="selectResidenteAll" resultMap="residenteResultMap">
+		Select p.id_persona, p.tipo_documento, p.num_documento, p.nombre,
+		p.primer_apellido, p.segundo_apellido,
+		pup.id_uprivada, up.numeracion, up.id_tipo_unidad, up.id_uinmobiliaria, up.zona
+		From persona p
+		inner join persona_up pup
+		on p.id_persona = pup.id_persona
+		and pup.id_tipo_relacion = 2
+		inner join unidadprivada up
+		on pup.id_uprivada = up.id_uprivada
+
+	</select>
+</mapper>
