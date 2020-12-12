@@ -93,7 +93,7 @@ function cuotaDetallesActualizar(idcuota){
         contentType:'application/json'   
         ,success : function(){
             console.log("ok!");
-          //  window.location.replace("http://localhost:8080/convivir/estadocuenta/uprivada/lista");
+            window.location.replace("http://localhost:8080/convivir/estadocuenta/uprivada/lista");
         }
         ,error : function(a,b,c){
             console.log("err!", a, b, c);
